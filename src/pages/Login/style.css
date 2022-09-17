@@ -1,0 +1,11 @@
+.login {
+  width: 600px;
+}
+
+.login input[type=submit] {
+  margin: 40px auto 0 auto;
+  background: #027db6;
+  color: #fff;
+  font-size: larger;
+  width: 50%;
+}

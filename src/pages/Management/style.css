@@ -1,0 +1,43 @@
+/* FORM-BOX - START */
+
+.form-box form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-box input {
+  width: 100%;
+  height: 40px;
+  border-radius: 8px;
+  border: 1px solid #027db6;
+  margin-bottom: 20px;
+  padding: 0 5px;
+}
+
+.form-box button {
+  margin-top: 20px;
+  height: 40px;
+  border: 1px solid #027db6;
+  border-radius: 8px;
+  background: #027db6;
+  color: #fff;
+  font-size: large;
+}
+
+.form-box div {
+  padding-top: 10px;
+}
+
+.form-box a {
+  display: block;
+  text-decoration: none;
+  color: #000;
+  margin: 10px 0 10px 0;
+  text-align: right;
+}
+
+.form-box h1 {
+  margin-bottom: 30px;
+}
+
+/* FORM-BOX - END */

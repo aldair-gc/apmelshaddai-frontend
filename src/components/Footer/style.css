@@ -1,0 +1,33 @@
+footer {
+  width: 100%;
+}
+
+footer a {
+  text-decoration: none;
+  color: #000;
+  font-size: small;
+}
+
+footer a:hover {
+  color: #027db6;
+}
+
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 10px;
+  justify-content: space-evenly;
+  background: #a3d0e5;
+  padding: 20px;
+}
+
+.footer-col {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 30%;
+  min-width: 200px;
+  padding: 20px;
+  text-align: center;
+}
