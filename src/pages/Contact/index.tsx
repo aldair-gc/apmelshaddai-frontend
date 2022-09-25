@@ -1,4 +1,4 @@
-import "./style.css";
+import { MapSquare } from "./style";
 
 export const Contact = () => {
   return (
@@ -46,13 +46,13 @@ export const Contact = () => {
             </div>
           </div>
         </div>
-        <div className="square box map-square">
+        <MapSquare className="square box">
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2937.715073857984!2d-71.80951948372636!3d42.58256977917267!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89e3e657847c3ead%3A0x28e614e0dae2564!2sApostolic%20and%20Prophetic%20Ministries%20El%20Shaddai!5e0!3m2!1sen!2sbr!4v1662291555801!5m2!1sen!2sbr"
             width="100%" height="600" style={{ border: 0 }} allowFullScreen={true} loading="lazy"
             referrerPolicy="no-referrer-when-downgrade">
           </iframe>
-        </div>
+        </MapSquare>
       </div>
     </main>
 

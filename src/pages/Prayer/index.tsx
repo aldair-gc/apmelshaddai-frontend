@@ -21,7 +21,7 @@ export const Prayer = () => {
         <div className="new-post post">
           <h2>Prayer request</h2>
 
-          <form encType="multipart/form-data" action="/php/newmessage.php" method="POST">
+          <form action="/prayer" method="POST">
 
             <label htmlFor="name">Name:</label>
             <input type="text" name="name" id="name" placeholder="Enter your name" />
@@ -33,14 +33,7 @@ export const Prayer = () => {
             <input type="tel" name="tel" id="tel" placeholder="Enter your phone number" />
 
             <label htmlFor="message">Message:</label>
-            <textarea name="message" id="message" cols={30} rows={10} placeholder="Write your message here"
-              autoCorrect="on"></textarea>
-
-            <label htmlFor="file">Picture, video or audio:</label>
-            <input type="hidden" name="MAX_FILE_SIZE" value="10000000" />
-            <input type="file" name="file" id="file" />
-
-            <input type="text" name="folder" value="prayer" className="hidden" />
+            <textarea name="message" id="message" cols={30} rows={10} placeholder="Write your message here" autoCorrect="on"></textarea>
 
             <input type="submit" value="Send" />
           </form>

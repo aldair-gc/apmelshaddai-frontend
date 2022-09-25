@@ -1,7 +1,18 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import "./style.css";
+import axios from "../../services/axios";
 
-export const NewPost = () => {
+export default function NewPost() {
+  const [groups, setGroups] = useState([]);
+
+  useEffect(() => {
+    async function getData() {
+      const dataGroups = await axios.get('/group');
+      setGroups(dataGroups.data);
+    }
+    getData();
+  }, []);
+
   return (
     <main>
       <div className="bg-blues"></div>
@@ -9,7 +20,7 @@ export const NewPost = () => {
       <div className="container box">
         <div className="filter-menu">
           <ul>
-            <li>
+            <li key={Math.random()}>
               <Link className="midbutton" to="/feed">
                 <i className="fa-solid fa-arrow-left"></i>
                 back
@@ -17,7 +28,7 @@ export const NewPost = () => {
             </li>
           </ul>
           <ul>
-            <li>
+            <li key={Math.random()}>
               <Link className="midbutton" to="/groups">
                 <i className="fa-solid fa-object-group"></i>
                 groups
@@ -29,33 +40,26 @@ export const NewPost = () => {
         <div className="new-post post">
           <h2>Create new post</h2>
 
-          <form encType="multipart/form-data" action="/php/newpost.php" method="POST">
-            <label htmlFor="groupname">Group:</label>
+          <form action="/post" method="POST">
+            <label htmlFor="group">Group:</label>
             <div className="radio-list">
 
-              {/* <?php while ($row = mysqli_fetch_array($groups)) { ?> */}
-              <div className="radio-option">
-                <input className="hidden" type="radio" name="groupname" id="<?php echo $row['groupname']; ?>" value="<?php echo $row['groupname']; ?>" />
-                <label htmlFor="groupname">groupname</label>
-              </div>
-              {/* <?php } ?> */}
+              {groups.map((g: any) => (
+                <div className="radio-option">
+                  <input className="hidden" type="radio" name="group" id={g.group} value={g.group} />
+                  <label htmlFor={g.group}>{g.group}</label>
+                </div>
+              ))}
 
             </div>
 
             <label htmlFor="title">Title:</label>
             <input type="text" name="title" id="title" />
 
-            <label htmlFor="content">Text:</label>
-            <textarea name="content" id="content" cols={30} rows={10}></textarea>
+            <label htmlFor="text">Text:</label>
+            <textarea name="text" id="text" cols={30} rows={10}></textarea>
 
-            <label htmlFor="file">Picture, video or audio:</label>
-            <input type="hidden" name="MAX_FILE_SIZE" value="100000000" />
-            <input type="file" name="file" id="file" />
-
-            <label htmlFor="youtubeurl">YouTube url:</label>
-            <input type="text" name="youtubeurl" id="youtubeurl" />
-
-            <input type="submit" value="Save" />
+            <input type="submit" value="Create" />
           </form>
         </div>
       </div>

@@ -1,7 +1,10 @@
 import "./style.css";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export const Header = () => {
+  const isLoggedIn = useSelector((state: any) => state.isLoggedIn);
+
   return (
     <header>
       <Link id="logo" to="/">
@@ -20,7 +23,9 @@ export const Header = () => {
         <li className="menu-opt"><Link to="/">Home</Link></li>
         <li className="menu-opt"><Link to="/feed">Feed</Link></li>
         <li className="menu-opt"><Link to="/contact">Contact</Link></li>
-        <li className="menu-opt"><Link className="font-red" id="management-opt" to="/management">Management</Link></li>
+        {isLoggedIn &&
+          <li className="menu-opt"><Link className="font-red" id="management-opt" to="/management">Management</Link></li>
+        }
       </ul>
     </header>
   );

@@ -9,8 +9,8 @@ export const Register = () => {
       <div className="center-center">
         <div className="form-box register box">
           <h1>Register</h1>
-          <form action="/php/register.php" method="post">
-            <label htmlFor="text">Name</label>
+          <form action="/user" method="post">
+            <label htmlFor="name">Name</label>
             <input type="text" name="name" id="name" autoComplete="name" placeholder="Your Name" required />
             <label htmlFor="email">Email</label>
             <input type="email" name="email" id="email" autoComplete="email" placeholder="your@email.com" required />
