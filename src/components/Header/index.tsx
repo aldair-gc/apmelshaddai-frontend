@@ -1,9 +1,8 @@
 import "./style.css";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
 
 export const Header = () => {
-  const isLoggedIn = useSelector((state: any) => state.isLoggedIn);
+  const isLoggedIn = true;
 
   return (
     <header>

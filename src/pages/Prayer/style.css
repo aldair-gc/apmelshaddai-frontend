@@ -37,21 +37,5 @@
   width: 50%;
 }
 
-#groups-list {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  list-style: none;
-}
-
-#groups-list li {
-  position: relative;
-}
-
-#groups-list a {
-  position: absolute;
-  right: -5px;
-  top: -5px;
-}
 
 /* NEW POST - END */

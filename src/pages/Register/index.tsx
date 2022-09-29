@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { RegisterForm } from "./RegisterForm";
 import "./style.css";
 
 export const Register = () => {
@@ -7,21 +7,7 @@ export const Register = () => {
       <div className="bg-blues"></div>
 
       <div className="center-center">
-        <div className="form-box register box">
-          <h1>Register</h1>
-          <form action="/user" method="post">
-            <label htmlFor="name">Name</label>
-            <input type="text" name="name" id="name" autoComplete="name" placeholder="Your Name" required />
-            <label htmlFor="email">Email</label>
-            <input type="email" name="email" id="email" autoComplete="email" placeholder="your@email.com" required />
-            <label htmlFor="password">Password</label>
-            <input type="password" name="password" id="password" autoComplete="new-password" required />
-            <input type="submit" value="Register" />
-          </form>
-          <div>
-            <Link to="/login">Already registered</Link>
-          </div>
-        </div>
+        <RegisterForm />
       </div>
     </main>
   );

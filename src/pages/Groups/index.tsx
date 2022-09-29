@@ -1,53 +1,56 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import "./style.css";
+import axios from "../../services/axios";
+import { Container, FilterMenu } from "../../styles/global";
+import { GroupsEdit, GroupsList } from "./styles";
 
 export const Groups = () => {
+  const [groups, setGroups] = useState([]);
+
+  useEffect(() => {
+    async function getData() {
+      const dataGroups = await axios.get('/group');
+      setGroups(dataGroups.data);
+    }
+    getData();
+  }, []);
+
   return (
     <main>
       <div className="bg-blues"></div>
 
-      <div className="container box">
-        <div className="filter-menu">
+      <Container>
+        <FilterMenu>
           <ul>
-            <li>
-              <a className="midbutton" href="/feed">
-                <i className="fa-solid fa-arrow-left"></i>
-                back
-              </a>
-            </li>
+            <li key="back"><Link className="midbutton" to="/feed"><i className="fa-solid fa-arrow-left"></i>back</Link></li>
           </ul>
           <ul>
-            <li>
-              <a className="midbutton" href="/newpost">
-                <i className="fa-solid fa-plus"></i>
-                new post
-              </a>
-            </li>
+            <li key="groups"><Link className="midbutton" to="/groups"><i className="fa-solid fa-object-group"></i>groups</Link></li>
           </ul>
-        </div>
-
-        <div className="new-post post">
+        </FilterMenu>
+        <GroupsEdit className="box">
           <h2>Groups</h2>
-          <ul id="groups-list">
-
-            {/* <?php while ($row = mysqli_fetch_array($groups)) { ?>
-                <li className="smallbutton no-link"><?php echo $row['groupname']; ?>
-                    <a className="minibutton font-red"
-                        href="<?php echo '/group_delete.php?groupname=' . $row['groupname']; ?>">
-                        <i className="fa-solid fa-circle-xmark"></i>
-                    </a>
-                </li>
-            <? php } ?> */}
-
-          </ul>
           <form action="/php/newgroup.php" method="post">
             <label htmlFor="groupname">New group:</label>
-            <input type="text" name="groupname" id="groupname" />
+            <input type="text" name="groupname" id="groupname" placeholder="Group name" />
 
             <input type="submit" value="Create" />
           </form>
-        </div>
-      </div>
+          <p>List of registered groups:</p>
+          <GroupsList>
+            {groups.map((g: any) => (
+              <li key={g.group} className="smallbutton no-link">{g.group}
+                <a className="minibutton font-red"
+                  href={"/group_delete?group=" + g.group}>
+                  <i className="fa-solid fa-circle-xmark"></i>
+                </a>
+              </li>
+            ))}
+
+          </GroupsList>
+
+        </GroupsEdit>
+      </Container>
     </main>
   );
 };

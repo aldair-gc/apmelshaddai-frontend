@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 
 export default createGlobalStyle`
   * {
@@ -245,4 +245,34 @@ export default createGlobalStyle`
 
 
   /* RESPONSIVENESS - END */
-`;
+`
+
+export const FilterMenu = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+
+  li {
+    list-style: none;
+  }
+
+  a {
+    text-decoration: none;
+    color: #000;
+    cursor: pointer;
+    gap: 5px;
+  }
+`
+
+export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  overflow: hidden;
+  padding: 20px 0;
+  max-width: 1200px;
+  width: calc(100% - 40px);
+`

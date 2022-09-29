@@ -1,10 +1,8 @@
-import { Navigate, Outlet, Route, useLocation, useNavigate } from "react-router-dom";
-import { selectIsLoggedIn } from "../store/modules/auth/slice";
-import { useSelector } from "react-redux";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 
 export default function Private() {
   const { pathname } = useLocation();
-  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const isLoggedIn = true;
 
   return isLoggedIn ? <Outlet /> : <Navigate to="/login" state={{ prevPath: pathname }} />;
 }

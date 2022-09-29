@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import "./style.css";
+import { AuthLogout } from "../../app/auth/Logout";
 
 export const Management = () => {
   return (
@@ -14,8 +15,8 @@ export const Management = () => {
             <li><Link to="/messages"><i className="fa-solid fa-envelope-open-text"></i>Messages reader</Link></li>
             <li><Link to="/newpost"><i className="fa-solid fa-square-plus"></i>New post</Link></li>
             <li><Link to="/groups"><i className="fa-solid fa-object-group"></i>Groups manager</Link></li>
-            <li><Link className="font-red" to="/php/logout"><i className="fa-solid fa-right-from-bracket"></i>Logout</Link></li>
           </ul>
+          <AuthLogout />
         </div>
       </div>
 

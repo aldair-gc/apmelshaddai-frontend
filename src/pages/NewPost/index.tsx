@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "../../services/axios";
+import { Container, FilterMenu } from "../../styles/global";
+import { PostCreate } from "./styles";
 
 export default function NewPost() {
   const [groups, setGroups] = useState([]);
@@ -17,27 +19,17 @@ export default function NewPost() {
     <main>
       <div className="bg-blues"></div>
 
-      <div className="container box">
-        <div className="filter-menu">
+      <Container>
+        <FilterMenu>
           <ul>
-            <li key={Math.random()}>
-              <Link className="midbutton" to="/feed">
-                <i className="fa-solid fa-arrow-left"></i>
-                back
-              </Link>
-            </li>
+            <li key="back"><Link className="midbutton" to="/feed"><i className="fa-solid fa-arrow-left"></i>back</Link></li>
           </ul>
           <ul>
-            <li key={Math.random()}>
-              <Link className="midbutton" to="/groups">
-                <i className="fa-solid fa-object-group"></i>
-                groups
-              </Link>
-            </li>
+            <li key="groups"><Link className="midbutton" to="/groups"><i className="fa-solid fa-object-group"></i>groups</Link></li>
           </ul>
-        </div>
+        </FilterMenu>
 
-        <div className="new-post post">
+        <PostCreate className="box">
           <h2>Create new post</h2>
 
           <form action="/post" method="POST">
@@ -57,12 +49,12 @@ export default function NewPost() {
             <input type="text" name="title" id="title" />
 
             <label htmlFor="text">Text:</label>
-            <textarea name="text" id="text" cols={30} rows={10}></textarea>
+            <textarea name="text" id="text" cols={30} rows={14}></textarea>
 
             <input type="submit" value="Create" />
           </form>
-        </div>
-      </div>
+        </PostCreate>
+      </Container>
     </main>
   );
 };
