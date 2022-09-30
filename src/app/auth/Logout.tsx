@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import axios, { CommonHeaderProperties } from "../../services/axios";
+import axios from "../../services/axios";
 import { useAppDispatch } from "../hooks";
 import { logout } from "./authSlice";
 
@@ -12,7 +12,7 @@ export function AuthLogout() {
 
     try {
       dispatch(logout());
-      axios.defaults.headers = { Authorization: "" } as CommonHeaderProperties;
+      axios.defaults.headers.common["Authorization"] = ``;
       toast.success("User logged out");
       navigate("/");
     } catch (err: any) {
@@ -22,6 +22,6 @@ export function AuthLogout() {
   }
 
   return (
-    <button onClick={handleSubmit}><i className="fa-solid fa-right-from-bracket"></i>Logout</button>
+    <button onClick={() => handleSubmit}><i className="fa-solid fa-right-from-bracket"></i>Logout</button>
   )
 }

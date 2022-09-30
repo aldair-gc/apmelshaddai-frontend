@@ -1,7 +1,7 @@
 
 import { redirect } from "react-router-dom";
 import { toast } from "react-toastify";
-import axios, { CommonHeaderProperties } from "../../services/axios";
+import axios from "../../services/axios";
 import { useAppDispatch } from "../hooks";
 import { authRequest, authSuccess, authFailure } from "./authSlice";
 
@@ -13,7 +13,7 @@ export async function loginRequest(email: string, password: string, prevPath: st
     dispatch(authRequest());
     const response = await axios.post("/token", { email, password });
     if (response.data.token) {
-      axios.defaults.headers = { Authorization: `Bearer ${response.data.token}` } as CommonHeaderProperties;
+      axios.defaults.headers.common["Authorization"] = `Bearer ${response.data.token}`;
       dispatch(authSuccess(response.data));
       toast.success(`Welcome ` + response.data.user.name);
       redirect(prevPath || "/");
