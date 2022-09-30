@@ -1,8 +1,22 @@
 import "./style.css";
 import { Link } from "react-router-dom";
+import { useAppSelector } from "../../app/hooks";
 
 export const Header = () => {
-  const isLoggedIn = true;
+  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
+
+  function hideMenu() {
+    const menuCheck = document.querySelector("#menu-check") as HTMLInputElement;
+    menuCheck.checked = false;
+  };
+
+  // Resize fix for menuIcon
+  window.addEventListener("resize", () => {
+    const menuCheck = document.querySelector("#menu-check") as HTMLInputElement;
+    if (innerWidth > 700) {
+      menuCheck.checked = false;
+    }
+  });
 
   return (
     <header>
@@ -18,7 +32,7 @@ export const Header = () => {
         <div id="menu-icon-c"></div>
       </label>
 
-      <ul id="menu">
+      <ul id="menu" onClick={hideMenu} onMouseLeave={hideMenu}>
         <li className="menu-opt"><Link to="/">Home</Link></li>
         <li className="menu-opt"><Link to="/feed">Feed</Link></li>
         <li className="menu-opt"><Link to="/contact">Contact</Link></li>

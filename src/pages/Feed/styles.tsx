@@ -21,12 +21,11 @@ export const PostContainer = styled.div`
 `
 
 export const Post = styled.div`
+position: relative;
   display: flex;
   flex-direction: column;
-  gap: 20px;
   min-height: 150px;
-  padding: 20px;
-  box-shadow: 0 0 5px #555;
+  box-shadow: 0 0 5px #000;
   background: #fff;
   max-width: 1000px;
   min-width: 200px;
@@ -40,6 +39,7 @@ export const PostMedia = styled.div`
   margin: auto;
   box-shadow: 0 0 5px #444;
   flex: 0 1 0;
+  margin-top: 20px;
 
   :has(iframe) {
     padding-bottom: 56.25%;
@@ -62,6 +62,7 @@ export const PostMedia = styled.div`
 `
 
 export const PostTexts = styled.div`
+  padding: 20px;
   line-height: 1.4em;
 `
 
@@ -78,8 +79,9 @@ export const PostControl = styled.div`
   display: flex;
   width: 100%;
   gap: 10px;
-  justify-content: space-between;
+  justify-content: center;
   flex: 0 0 auto;
+  padding-bottom: 20px;
 
   a {
     text-decoration: none;
@@ -94,5 +96,70 @@ export const Filters = styled.ul`
 
   label:has(input:checked) {
     background: #a3d0e5;
+  }
+`
+export const MediaControl = styled.div`
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  gap: 10px;
+  transition: all .3s;
+
+  :hover {
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(5px);
+    a, label {
+     visibility: visible;
+   }
+  }
+
+  a, label {
+    visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    height: 40px;
+    padding: 0 15px;
+  }
+
+`
+
+export const ConfirmAtent = styled.div`
+  position: absolute;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(5px);
+  color: #fff;
+  font-size: 25px;
+  text-shadow: 0 0 5px #000;
+
+  .options {
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+  }
+
+  button {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    padding: 10px 20px;
+    border: 1px solid #027db6;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #000;
+    gap: 5px;
+    font-size: 15px;
   }
 `

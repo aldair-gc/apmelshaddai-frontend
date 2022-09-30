@@ -1,15 +1,16 @@
 import { useState } from "react";
-import { Link, useLocation, redirect } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import isEmail from "validator/lib/isEmail";
-import axios, { CommonHeaderProperties } from "../../services/axios";
+import axios from "../../services/axios";
 import { useAppSelector, useAppDispatch } from "../hooks";
 import { authRequest, authSuccess, authFailure } from "./authSlice";
 
 export function AuthLogin() {
-  const auth = useAppSelector((state) => state.auth);
-  if (auth.isLoggedIn) redirect("/");
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const auth = useAppSelector((state) => state.auth);
+  if (auth.isLoggedIn) navigate("/management");
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -35,10 +36,10 @@ export function AuthLogin() {
       dispatch(authRequest());
       const response = await axios.post("/token", { email, password });
       if (response.data.token) {
-        axios.defaults.headers = { Authorization: `Bearer ${response.data.token}` } as CommonHeaderProperties;
+        axios.defaults.headers.common["Authorization"] = `Bearer ${response.data.token}`;
         dispatch(authSuccess(response.data));
         toast.success(`Welcome ` + response.data.user.name);
-        redirect(state.prevPath || "/");
+        navigate(state.prevPath || "/");
       } else {
         dispatch(authFailure());
         toast.error("Something went wrong...")

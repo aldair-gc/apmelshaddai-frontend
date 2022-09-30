@@ -1,10 +1,14 @@
-import { Filters, Post, PostContainer, PostContent, PostControl, PostMedia, PostsContainer, PostTexts, PostTitle } from "./styles";
+import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
+import { ConfirmAtent, Filters, MediaControl, Post, PostContainer, PostContent, PostControl, PostMedia, PostsContainer, PostTexts, PostTitle } from "./styles";
 import { FilterMenu } from "../../styles/global";
 import axios from "../../services/axios";
-import { useState, useEffect } from "react";
 import { useAppSelector } from "../../app/hooks";
 
+
 export default function Feed() {
+  const navigate = useNavigate();
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
   const [posts, setPosts] = useState([]);
   const [groups, setGroups] = useState([]);
@@ -24,9 +28,36 @@ export default function Feed() {
     setFilter(e.target.id)
   }
 
-  const filteredPosts = filter != "0"
-    ? posts.filter((post: any) => post.group == filter)
-    : [];
+  const filteredPosts = filter != "0" ? posts.filter((post: any) => post.group == filter) : [];
+
+  async function editMedia(e: any, id: string) {
+    const med = e.target.files[0];
+    console.log(posts)
+    // const medUrl = URL.createObjectURL(med);
+    const formData = new FormData();
+    formData.append("post_id", id);
+    formData.append("media", med);
+
+    try {
+      await axios.post("/media", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+      toast.success("Media updated");
+    } catch (err: any) {
+      const errors = err.response?.data?.errors ?? [];
+      errors.map((error: any) => toast.error(error));
+    }
+  }
+
+  async function deleteMedia(id: number) {
+    try {
+      const del = await axios.delete("/media/" + id);
+      del.status === 200 ? toast.success("Media deleted from post") : toast.error("Something went wrong");
+    } catch (err: any) {
+      const errors = err.response?.data?.errors ?? [{ "error": "Unknown error" }];
+      errors.map((error: any) => toast.error(error));
+    }
+  }
 
   return (
     <main>
@@ -51,7 +82,7 @@ export default function Feed() {
         <PostContainer>
 
           {(filteredPosts.length > 0 ? filteredPosts : posts).map((post: any) => (
-            <Post className={"group" + post.group}>
+            <Post key={post.id} className={"group" + post.group}>
 
               <PostMedia>
                 {post.Links[0]?.url
@@ -63,6 +94,23 @@ export default function Feed() {
                   :
                   <img className="post-media" src={post.Media[0]?.url ?? "https://apmelshaddai-server.aldairgc.com/medias/1663702606334_14165.jpg"}></img>
                 }
+                {isLoggedIn ?
+                  <MediaControl>
+                    <form>
+                      <label htmlFor={"media-post-id-" + post.id} className="midbutton">
+                        <i className="fa-solid fa-upload"></i> upload
+                      </label>
+                      <input type="file" name="media" id={"media-post-id-" + post.id} onChange={(e) => editMedia(e, post.id)} className="hidden" />
+                      <input type="hidden" name="post_id" value={post.id} />
+                    </form>
+                    {(post.Links[0]?.url || post.Media[0]?.url) ?
+                      <a className="midbutton font-red" onClick={() => deleteMedia(post.id)}>
+                        <i className="fa-solid fa-eraser"></i> delete
+                      </a>
+                      : ""
+                    }
+                  </MediaControl>
+                  : ""}
               </PostMedia>
 
               <PostTexts>
@@ -72,15 +120,23 @@ export default function Feed() {
 
               {isLoggedIn ?
                 <PostControl>
-                  <a className="midbutton" href={"/post_editor?id=" + post.id}>
+                  <a className="midbutton" onClick={() => navigate("/editpost/" + post.id)}>
                     <i className="fa-solid fa-pen-to-square"></i>edit
                   </a>
-                  <a className="midbutton font-red" href={"/post_delete?id=" + post.id}>
+                  <a className="midbutton font-red"
+                    onClick={() => (document.querySelector("#confirm-atent-id-" + post.id) as HTMLDivElement).style.display = "flex"}>
                     <i className="fa-solid fa-eraser"></i>delete
                   </a>
                 </PostControl>
                 : ""}
 
+              <ConfirmAtent id={"confirm-atent-id-" + post.id}>
+                Confirm deletion?
+                <div className="options">
+                  <button className="font-red" onClick={() => deleteMedia(post.id)}>Confirm</button>
+                  <button onClick={() => (document.querySelector("#confirm-atent-id-" + post.id) as HTMLDivElement).style.display = "none"}>Cancel</button>
+                </div>
+              </ConfirmAtent>
             </Post>
           ))}
 

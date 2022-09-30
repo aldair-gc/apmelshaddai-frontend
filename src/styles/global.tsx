@@ -276,3 +276,14 @@ export const Container = styled.div`
   max-width: 1200px;
   width: calc(100% - 40px);
 `
+export const ButtonMid = styled.button`
+  display: flex;
+  align-items: center;
+  background: #fff;
+  padding: 10px 20px;
+  border: 1px solid #027db6;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #000;
+  gap: 5px;
+`

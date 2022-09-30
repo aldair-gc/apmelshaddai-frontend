@@ -1,10 +1,11 @@
-import { redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios, { CommonHeaderProperties } from "../../services/axios";
 import { useAppDispatch } from "../hooks";
 import { logout } from "./authSlice";
 
 export function AuthLogout() {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   async function handleSubmit() {
@@ -13,7 +14,7 @@ export function AuthLogout() {
       dispatch(logout());
       axios.defaults.headers = { Authorization: "" } as CommonHeaderProperties;
       toast.success("User logged out");
-      redirect("/");
+      navigate("/");
     } catch (err: any) {
       const errors = err.response?.data?.errors ?? [];
       errors.map((error: any) => toast.error(error));
