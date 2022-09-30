@@ -19,7 +19,7 @@ export default function Posts() {
     <PostContainer>
 
       {posts.map((post: any) => (
-        <Post className={post.group}>
+        <Post className={"group" + post.group}>
 
           <PostMedia>
             {post.Links[0]?.url

@@ -5,6 +5,7 @@ import { FilterMenu } from "../../styles/global";
 
 export default function Groups() {
   const [groups, setGroups] = useState([]);
+  const [filter, setFilter] = useState("");
 
   useEffect(() => {
     async function getData() {
@@ -14,12 +15,24 @@ export default function Groups() {
     getData();
   }, []);
 
+  function filterSelect(e: any) {
+    setFilter(e.target.id)
+  }
+
   return (
     <FilterMenu>
       <Filters>
-        <li key="all" className="all smallbutton active">all</li>
+        <li key="0" id="filter" className={filter}>
+          <label htmlFor="0" className="groupname smallbutton">all
+            <input type="radio" name="filter" id="0" value="all" className="all smallbutton hidden" onClick={filterSelect} defaultChecked />
+          </label>
+        </li>
         {groups.map((g: any) => (
-          <li key={g.group} className="groupname smallbutton">{g.group}</li>
+          <li key={g.id}>
+            <label htmlFor={g.id} className="groupname smallbutton">{g.group}
+              <input type="radio" name="filter" id={g.id} value={"group" + g.id} className="hidden" onClick={filterSelect} />
+            </label>
+          </li>
         ))}
       </Filters>
     </FilterMenu>

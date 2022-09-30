@@ -92,7 +92,7 @@ export const Filters = styled.ul`
   list-style: none;
   gap: 10px;
 
-  .active {
+  label:has(input:checked) {
     background: #a3d0e5;
   }
 `
