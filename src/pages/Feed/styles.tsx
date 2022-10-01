@@ -39,7 +39,6 @@ export const PostMedia = styled.div`
   margin: auto;
   box-shadow: 0 0 5px #444;
   flex: 0 1 0;
-  margin-top: 20px;
 
   :has(iframe) {
     padding-bottom: 56.25%;
@@ -113,19 +112,32 @@ export const MediaControl = styled.div`
   :hover {
     background: rgba(0,0,0,0.5);
     backdrop-filter: blur(5px);
-    a, label {
+    a, label, div {
      visibility: visible;
    }
   }
 
-  a, label {
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  a, label, div {
     visibility: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
     text-decoration: none;
+    margin: auto;
     height: 40px;
     padding: 0 15px;
+    gap: 5px;
+    cursor: pointer;
+  }
+
+  input[type=text] {
+    padding: 0 5px;
   }
 
 `

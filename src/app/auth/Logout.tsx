@@ -3,16 +3,16 @@ import { toast } from "react-toastify";
 import axios from "../../services/axios";
 import { useAppDispatch } from "../hooks";
 import { logout } from "./authSlice";
+import { ButtonMid } from "../../styles/global"
 
 export function AuthLogout() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  async function handleSubmit() {
-
+  const logOut = () => {
     try {
       dispatch(logout());
-      axios.defaults.headers.common["Authorization"] = ``;
+      delete axios.defaults.headers.common["Authorization"];
       toast.success("User logged out");
       navigate("/");
     } catch (err: any) {
@@ -22,6 +22,6 @@ export function AuthLogout() {
   }
 
   return (
-    <button onClick={() => handleSubmit}><i className="fa-solid fa-right-from-bracket"></i>Logout</button>
+    <ButtonMid onClick={logOut}><i className="fa-solid fa-right-from-bracket"></i>Logout</ButtonMid>
   )
 }
