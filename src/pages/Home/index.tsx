@@ -18,7 +18,7 @@ export const Home = () => {
   return (
     <main>
       <div className="intro">
-        <img src="./src/images/logo-bg-png.png" alt="Logo" />
+        <img src="../../assets/images/logo-bg-png.png" alt="Logo" />
       </div>
 
       <div className="block-bg-white text-block">

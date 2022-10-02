@@ -8,8 +8,6 @@ export const PostsContainer = styled.div`
   gap: 10px;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  overflow: hidden;
 `
 
 export const PostContainer = styled.div`
@@ -37,7 +35,6 @@ export const PostMedia = styled.div`
   max-height: 60vh;
   max-width: 100%;
   margin: auto;
-  box-shadow: 0 0 5px #444;
   flex: 0 1 0;
 
   :has(div iframe) {
@@ -55,8 +52,12 @@ export const PostMedia = styled.div`
   }
 
   div, img {
-    width: 100%;
-    height: 100%;
+    max-height: inherit;
+    max-width: 100%;
+  }
+
+  img {
+    box-shadow: 0 0 5px #000;
   }
 `
 

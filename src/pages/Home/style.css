@@ -7,7 +7,7 @@
   height: 70vh;
   width: 100%;
   overflow: hidden;
-  background-image: url("../../images/zac-durant-_6HzPU9Hyfg-unsplash.jpg");
+  background-image: url("../../assets/images/zac-durant-_6HzPU9Hyfg-unsplash.jpg");
   background-position: center center;
   background-attachment: fixed;
   background-repeat: no-repeat;
@@ -115,42 +115,42 @@
 }
 
 #church {
-  background: url(../../images/church_small.jpg) center;
+  background: url(../../assets/images/church_small.jpg) center;
   background-size: cover;
 }
 
 #our-family {
-  background: url(../../images/2021-12-27.jpeg) center;
+  background: url(../../assets/images/2021-12-27.jpeg) center;
   background-size: cover;
 }
 
 #feed {
-  background: url(../../images/logo3DPaper_small.jpg) center;
+  background: url(../../assets/images/logo3DPaper_small.jpg) center;
   background-size: cover;
 }
 
 #prayers {
-  background: url(../../images/prayer-1308663_640.jpg) center;
+  background: url(../../assets/images/prayer-1308663_640.jpg) center;
   background-size: cover;
 }
 
 #missions {
-  background: url(../../images/missions-small.jpeg) center;
+  background: url(../../assets/images/missions-small.jpeg) center;
   background-size: cover;
 }
 
 #agenda {
-  background: url(../../images/business-3054946_640.jpg) center;
+  background: url(../../assets/images/business-3054946_640.jpg) center;
   background-size: cover;
 }
 
 #pictures {
-  background: url(../../images/church_inside_small.jpg) center;
+  background: url(../../assets/images/church_inside_small.jpg) center;
   background-size: cover;
 }
 
 #videos {
-  background: url(../../images/clapper-board-1019607_640.jpg) center;
+  background: url(../../assets/images/clapper-board-1019607_640.jpg) center;
   background-size: cover;
 }
 
@@ -480,21 +480,21 @@
 
 .carousel_slide:nth-of-type(2),
 .carousel_indicators .carousel_indicator:nth-of-type(2) {
-  background-image: url("../../images/church-googlemaps.jpg");
+  background-image: url("../../assets/images/church-googlemaps.jpg");
   background-size: cover;
   background-position: center;
 }
 
 .carousel_slide:nth-of-type(3),
 .carousel_indicators .carousel_indicator:nth-of-type(3) {
-  background-image: url("../../images/church_inside.jpg");
+  background-image: url("../../assets/images/church_inside.jpg");
   background-size: cover;
   background-position: center;
 }
 
 .carousel_slide:nth-of-type(4),
 .carousel_indicators .carousel_indicator:nth-of-type(4) {
-  background-image: url("../../images/2021-12-27.jpeg");
+  background-image: url("../../assets/images/2021-12-27.jpeg");
   background-size: cover;
   background-position: center;
 }
