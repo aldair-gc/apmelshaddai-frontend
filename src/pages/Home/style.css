@@ -9,14 +9,14 @@
   overflow: hidden;
   background-image: url("../../images/zac-durant-_6HzPU9Hyfg-unsplash.jpg");
   background-position: center center;
-  background-attachment: local;
+  background-attachment: fixed;
   background-repeat: no-repeat;
   background-size: cover;
 }
 
 .intro img {
-  max-width: 900px;
-  min-width: 500px;
+  max-width: 100%;
+  max-height: 100%;
 }
 
 

@@ -13,6 +13,7 @@ export function AuthLogout() {
     try {
       dispatch(logout());
       delete axios.defaults.headers.common["Authorization"];
+      localStorage.setItem("token", "");
       toast.success("User logged out");
       navigate("/");
     } catch (err: any) {

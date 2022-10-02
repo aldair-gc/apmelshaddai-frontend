@@ -68,12 +68,8 @@ export default function NewPost() {
 
       <Container>
         <FilterMenu>
-          <ul>
-            <li key="back"><Link className="midbutton" to="/feed"><i className="fa-solid fa-arrow-left"></i>back</Link></li>
-          </ul>
-          <ul>
-            <li key="groups"><Link className="midbutton" to="/groups"><i className="fa-solid fa-object-group"></i>groups</Link></li>
-          </ul>
+          <Link className="midbutton" to="/feed"><i className="fa-solid fa-arrow-left"></i>back</Link>
+          <Link className="midbutton" to="/groups"><i className="fa-solid fa-object-group"></i>groups</Link>
         </FilterMenu>
 
         <PostCreate className="box">

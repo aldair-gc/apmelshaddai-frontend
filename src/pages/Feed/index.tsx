@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect, createElement } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { ConfirmAtent, Filters, MediaControl, Post, PostContainer, PostContent, PostControl, PostMedia, PostsContainer, PostTexts, PostTitle } from "./styles";
 import { FilterMenu } from "../../styles/global";
@@ -70,6 +70,13 @@ export default function Feed() {
       });
       setPosts(newPosts);
 
+      (document.querySelector(".media-post-id-" + id) as HTMLElement).innerHTML = `
+      <img className="post-media" src=${medUrl}></img>
+      `;
+
+      (document.querySelector(".media-control-post-id-" + id) as HTMLElement).classList.add("hidden");
+      (document.querySelector(".control-media-post-id-" + id) as HTMLElement).classList.remove("hidden");
+
     } catch (err: any) {
       const errors = err.response?.data?.errors ?? [{ "error": "Unknown error" }];
       errors.map((error: any) => toast.error(error));
@@ -91,10 +98,10 @@ export default function Feed() {
       });
       setPosts(newPosts);
 
-      (document.querySelector(".media-post-id-" + id) as HTMLElement).outerHTML = `
-        <iframe className=${"media-post-id-" + id}
-        src=${"https://www.youtube.com/embed/" + lnk.split("/")[3]} title="YouTube video player" frameBorder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen>
+      (document.querySelector(".media-post-id-" + id) as HTMLElement).innerHTML = `
+        <iframe
+          src=${"https://www.youtube.com/embed/" + lnk.split("/")[3]} title="YouTube video player" frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen>
         </iframe>
       `;
 
@@ -118,6 +125,9 @@ export default function Feed() {
       });
       setPosts(newPosts);
 
+      (document.querySelector(".media-post-id-" + id) as HTMLElement).innerHTML = `
+        <img className="post-media" src="https://apmelshaddai-server.aldairgc.com/medias/1663702606334_14165.jpg"}></img>
+      `;
       (document.querySelector(".media-control-post-id-" + id) as HTMLElement).classList.remove("hidden");
       (document.querySelector(".control-media-post-id-" + id) as HTMLElement).classList.add("hidden");
 
@@ -138,7 +148,7 @@ export default function Feed() {
       });
       setPosts(newPosts);
 
-      (document.querySelector(".media-post-id-" + id) as HTMLElement).outerHTML = `
+      (document.querySelector(".media-post-id-" + id) as HTMLElement).innerHTML = `
         <img className="post-media" src="https://apmelshaddai-server.aldairgc.com/medias/1663702606334_14165.jpg"}></img>
       `;
       (document.querySelector(".media-control-post-id-" + id) as HTMLElement).classList.remove("hidden");
@@ -189,18 +199,33 @@ export default function Feed() {
           {(filteredPosts.length > 0 ? filteredPosts : posts).map((post: any) => (
             <Post key={post.id} className={"group" + post.group}>
 
-              <PostMedia>
-                {post.Links[0]?.url
-                  ?
-                  <iframe className={"media-post-id-" + post.id}
-                    src={"https://www.youtube.com/embed/" + post.Links[0].url.split("/")[3]} title="YouTube video player" frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen>
-                  </iframe>
-                  :
-                  <img className={"post-media media-post-id-" + post.id} src={post.Media[0]?.url ?? "https://apmelshaddai-server.aldairgc.com/medias/1663702606334_14165.jpg"}></img>
-                }
+              <PostMedia onMouseLeave={() => {
+                const md = (document.querySelectorAll(".mediacontrol"));
+                md.forEach((control: any) => control.style.visibility = "visible");
+              }}>
+                <div className={"media-post-id-" + post.id}>
+                  {post.Links[0]?.url
+                    ?
+                    <iframe
+                      src={"https://www.youtube.com/embed/" + post.Links[0].url.split("/")[3]} title="YouTube video player" frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen>
+                    </iframe>
+                    :
+                    <img className="post-media" src={post.Media[0]?.url ?? "https://apmelshaddai-server.aldairgc.com/medias/1663702606334_14165.jpg"}></img>
+                  }
+                </div>
                 {isLoggedIn ?
-                  <MediaControl>
+                  <MediaControl className={"mediacontrol mediacontrol-post-id" + post.id}>
+
+                    <a className={"control-close-btn control-close-post-id-" + post.id} onClick={() => {
+                      const md = document.querySelectorAll(".mediacontrol");
+                      md.forEach((control: any) => {
+                        control.style.visibility = "hidden"
+                      });
+                    }}>
+                      <i className="fa-solid fa-circle-xmark"></i>
+                    </a>
+
                     <form className={((post.Links[0]?.url || post.Media[0]?.url) ? "hidden " : "") + "media-control-post-id-" + post.id}>
                       <label htmlFor={"media-post-id-" + post.id} className="midbutton">
                         <i className="fa-solid fa-upload"></i>upload picture
@@ -222,6 +247,7 @@ export default function Feed() {
                     <a className={(post.Media[0]?.url ? "" : "hidden ") + "midbutton font-red control-media-post-id-" + post.id} onClick={() => deleteMedia(post.id)}>
                       <i className="fa-solid fa-eraser"></i>delete picture
                     </a>
+
                   </MediaControl>
                   : ""
                 }

@@ -40,8 +40,8 @@ export const PostMedia = styled.div`
   box-shadow: 0 0 5px #444;
   flex: 0 1 0;
 
-  :has(iframe) {
-    padding-bottom: 56.25%;
+  :has(div iframe) {
+    padding-bottom: calc(9 / 16 *  100%);
     width: 100%;
   }
 
@@ -54,7 +54,7 @@ export const PostMedia = styled.div`
     background: #444;
   }
 
-  img {
+  div, img {
     width: 100%;
     height: 100%;
   }
@@ -100,6 +100,7 @@ export const Filters = styled.ul`
 export const MediaControl = styled.div`
   position: absolute;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   top: 0;
@@ -112,7 +113,8 @@ export const MediaControl = styled.div`
   :hover {
     background: rgba(0,0,0,0.5);
     backdrop-filter: blur(5px);
-    a, label, div {
+
+    a, label, div, form {
      visibility: visible;
    }
   }
@@ -129,17 +131,21 @@ export const MediaControl = styled.div`
     align-items: center;
     justify-content: center;
     text-decoration: none;
-    margin: auto;
     height: 40px;
     padding: 0 15px;
     gap: 5px;
     cursor: pointer;
+    margin: 0 auto;
   }
 
   input[type=text] {
     padding: 0 5px;
   }
 
+  .control-close-btn {
+    color: #fff;
+    font-size: 30px;
+  }
 `
 
 export const ConfirmAtent = styled.div`

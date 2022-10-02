@@ -93,13 +93,6 @@ export default createGlobalStyle`
     background: #a3d0e5;
   }
 
-  .form-box {
-    margin: 20px auto 20px auto;
-    width: 1200px;
-    padding: 30px;
-    max-width: 90%;
-  }
-
   .font-red {
     color: #aa0000 !important;
   }
@@ -269,12 +262,12 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   gap: 20px;
   overflow: hidden;
   padding: 20px 0;
   max-width: 1200px;
   width: calc(100% - 40px);
+  min-height: 80vh;
 `
 export const ButtonMid = styled.button`
   display: flex;
@@ -287,3 +280,46 @@ export const ButtonMid = styled.button`
   color: #000;
   gap: 5px;
 `
+
+export const SmallBox = styled.div`
+  width: 500px;
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 5px #555;
+  border-radius: 15px;
+  padding: 20px;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0;
+  }
+
+  input {
+    border: 1px solid #027db6;
+    border-radius: 8px;
+    padding: 5px;
+    font-size: 16px;
+  }
+
+  label {
+    margin-top: 10px;
+  }
+
+  input[type=submit], button {
+    text-align: center;
+    margin: 30px auto 10px auto;
+    background: #027db6;
+    color: #fff;
+    font-size: 18px;
+    width: 200px;
+    padding: 5px 15px;
+    border: 1px solid #027db6;
+    border-radius: 8px;
+    cursor: pointer;
+    gap: 5px;
+
+    :hover {
+      background: #005a83;
+    }
+  }
+`;

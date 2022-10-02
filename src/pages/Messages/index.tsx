@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "../../services/axios";
+import { AllMessagesContainer, Message, MessageContainer, MessageContent, MessageControl, MessageHeaders } from "./styles";
 
 export const Messages = () => {
   const [messages, setMessages] = useState([]);
@@ -16,42 +17,37 @@ export const Messages = () => {
     <main>
       <div className="bg-blues"></div>
 
-      <div className="posts-container">
-        <div className="filter-menu">
-          <ul id="filters">
-            <li id="prayer" className="smallbutton">prayer</li>
-          </ul>
-        </div>
-
-        <div className="post-container">
+      <AllMessagesContainer>
+        <MessageContainer>
 
           {messages.map((m: any) => (
-            <div className="post prayers">
+            <Message key={m.id}>
 
-              <div className="post-control">
-                <a className="midbutton" href={"mailto:" + m.email}>
-                  <i className="fa-solid fa-pen-to-square"></i>reply
-                </a>
-                <a className="midbutton font-red" href={"/prayer?id=" + m.id}>
-                  <i className="fa-solid fa-eraser"></i>delete
-                </a>
-              </div>
+              <div className="head">
+                <MessageControl>
+                  <a className="smallbutton" href={"mailto:" + m.email}>
+                    <i className="fa-solid fa-pen-to-square"></i>reply
+                  </a>
+                  <a className="smallbutton font-red" href={"/prayer?id=" + m.id}>
+                    <i className="fa-solid fa-eraser"></i>delete
+                  </a>
+                </MessageControl>
 
-              <div className="message-text">
-                <div className="message-header">
+                <MessageHeaders>
                   <div className="name">Name: {m.name}</div>
                   <div className="email">Email: {m.email}</div>
                   <div className="tel">Tel: {m.tel}</div>
                   <div className="date">Date: {m.created_at}</div>
-                </div>
-                <hr />
-                <div className="posts-content">{m.text}</div>
+                </MessageHeaders>
               </div>
-            </div>
+
+              <MessageContent>{m.text}</MessageContent>
+
+            </Message>
           ))}
 
-        </div>
-      </div>
+        </MessageContainer>
+      </AllMessagesContainer>
     </main>
   );
 };

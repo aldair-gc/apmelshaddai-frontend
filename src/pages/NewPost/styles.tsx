@@ -19,6 +19,7 @@ export const PostCreate = styled.div`
     border: 1px solid #027db6;
     border-radius: 8px;
     padding: 5px;
+    font-size: 16px;
   }
 
   label {

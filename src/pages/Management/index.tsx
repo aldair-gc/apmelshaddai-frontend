@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import "./style.css";
 import { AuthLogout } from "../../app/auth/Logout";
+import { MenuBox } from "./style";
 
 export const Management = () => {
   return (
@@ -8,7 +8,7 @@ export const Management = () => {
       <div className="bg-blues"></div>
 
       <div className="center-center">
-        <div className="form-box box">
+        <MenuBox className="box">
           <h1>Management</h1>
           <ul id="home-options">
             <li><Link to="/feed"><i className="fa-solid fa-table-list"></i>Feed Manager</Link></li>
@@ -17,7 +17,7 @@ export const Management = () => {
             <li><Link to="/groups"><i className="fa-solid fa-object-group"></i>Groups manager</Link></li>
           </ul>
           <AuthLogout />
-        </div>
+        </MenuBox>
       </div>
 
     </main>

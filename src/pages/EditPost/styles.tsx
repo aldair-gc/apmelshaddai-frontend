@@ -19,6 +19,7 @@ export const PostCreate = styled.div`
     border: 1px solid #027db6;
     border-radius: 8px;
     padding: 5px;
+    font-size: 16px;
   }
 
   label {
@@ -29,7 +30,7 @@ export const PostCreate = styled.div`
     margin: 40px auto 0 auto;
     background: #027db6;
     color: #fff;
-    font-size: larger;
+    font-size: 18px;
     width: 50%;
   }
 `

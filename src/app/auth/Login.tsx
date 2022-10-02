@@ -37,6 +37,7 @@ export function AuthLogin() {
       const response = await axios.post("/token", { email, password });
       if (response.data.token) {
         axios.defaults.headers.common["Authorization"] = `Bearer ${response.data.token}`;
+        localStorage.setItem("token", response.data.token);
         dispatch(authSuccess(response.data));
         toast.success(`Welcome ` + response.data.user.name);
         navigate(state.prevPath || "/");
@@ -51,7 +52,7 @@ export function AuthLogin() {
   }
 
   return (
-    <div className="form-box box">
+    <div>
       <h1>Login</h1>
       <form onSubmit={handleSubmit}>
         <label htmlFor="email">Email</label>
@@ -76,10 +77,6 @@ export function AuthLogin() {
         />
         <button onClick={handleSubmit}>Login</button>
       </form>
-      <div>
-        <Link to="/register">Register new user</Link>
-        <Link to="/login?msg=it">Forgot the password</Link>
-      </div>
     </div>
   )
 }
