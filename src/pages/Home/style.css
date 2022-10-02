@@ -10,7 +10,6 @@
   background-image: url("../../assets/images/zac-durant-_6HzPU9Hyfg-unsplash.jpg");
   background-position: center center;
   background-attachment: fixed;
-  background-repeat: no-repeat;
   background-size: cover;
 }
 
@@ -473,7 +472,7 @@
 
 .carousel_slide:nth-of-type(1),
 .carousel_indicators .carousel_indicator:nth-of-type(1) {
-  background-image: url("../../images/business-3054946_640.jpg");
+  background-image: url("../../assets/images/business-3054946_640.jpg");
   background-size: cover;
   background-position: center;
 }

@@ -1,6 +1,7 @@
 import "./style.css";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../../app/hooks";
+import smallLogo from "../../assets/images/logo-png-small.png"
 
 export const Header = () => {
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
@@ -21,7 +22,7 @@ export const Header = () => {
   return (
     <header>
       <Link id="logo" to="/">
-        <img src="./src/images/logo-png-small.png" alt="Logo" />
+        <img src={smallLogo} alt="Logo" />
         Apostolic & Prophetic Ministries El Shaddai
       </Link>
 

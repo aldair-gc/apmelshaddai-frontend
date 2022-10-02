@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import "./style.css";
+import logo from "../../assets/images/logo-bg-png.png";
 
 const carousels = document.getElementsByClassName("carousel_activator") as HTMLCollectionOf<HTMLInputElement>;
 
@@ -18,7 +19,7 @@ export const Home = () => {
   return (
     <main>
       <div className="intro">
-        <img src="../../assets/images/logo-bg-png.png" alt="Logo" />
+        <img src={logo} alt="Logo" />
       </div>
 
       <div className="block-bg-white text-block">
