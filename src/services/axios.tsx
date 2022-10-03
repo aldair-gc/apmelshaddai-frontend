@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { logout } from '../app/auth/authSlice';
 import { store } from '../app/store';
 
 const inst = axios.create({
@@ -9,7 +8,8 @@ const inst = axios.create({
 
 inst.interceptors.request.use(
   (config: any) => {
-    const token = localStorage.getItem("token");
+    // const token = localStorage.getItem("token");
+    const token = store.getState().auth.token;
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
