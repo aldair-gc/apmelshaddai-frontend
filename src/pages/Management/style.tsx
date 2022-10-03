@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 export const MenuBox = styled.div`
   position: relative;
-  margin: 20px auto;
+  margin: 20px;
   padding: 30px;
 
 button {

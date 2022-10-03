@@ -58,49 +58,76 @@ export default function Feed() {
 
     let file = e.target.files[0];
 
+    //if image type is heic, convert it to jpg
     if (file.type === "image/heic") {
       const converted: any = await heic2any({ blob: file, toType: "image/jpeg" });
       file = new File([converted], `${file.name}.jpg`, { type: "image/jpeg", lastModified: new Date().getTime() });
     }
 
-    if (file.type !== "image/jpeg") {
-      toast.error("This file is not valid");
-      e.target.value = "";
-      return;
-    };
+    //resize it to w=1200 h=auto
+    const url = URL.createObjectURL(file);
+    const img = document.querySelector(".img_temp") as HTMLImageElement;
+    img.src = url;
 
-    e.target.value = "";
-    const medUrl = URL.createObjectURL(file);
-    const formData = new FormData();
-    formData.append("post_id", id.toString());
-    formData.append("media", file);
+    img.onload = async () => {
+      const { width, height } = img;
+      let newWidth = width;
+      let newHeith = height;
+      const maxWidth = 1200;
+      const maxHeight = 800;
 
-    try {
-      const edit = await axios.post("/media", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-      edit.data?.post_id === id.toString() ? toast.success("Picture uploaded successfully") : toast.error("Something went wrong");
+      if (width > maxWidth) {
+        newHeith = height * (maxWidth / width);
+        newWidth = maxWidth;
+      }
 
-      const newPosts = [...posts];
-      newPosts.forEach((post: any) => {
-        if (post.id === id) post.Media = [{
-          "url": medUrl,
-          "filename": edit.data.filename,
-        }];
-      });
-      setPosts(newPosts);
+      if (height > maxHeight) {
+        newWidth = width * (maxHeight / height);
+        newHeith = maxHeight;
+      }
+      const canvas = document.createElement("canvas");
+      canvas.width = newWidth;
+      canvas.height = newHeith;
+      const ctx = canvas.getContext("2d");
+      ctx?.drawImage(img, 0, 0, newWidth, newHeith);
 
-      (document.querySelector(".media-post-id-" + id) as HTMLElement).innerHTML = `
-      <img className="post-media" src=${medUrl}></img>
-      `;
+      canvas.toBlob(async (ev: any) => {
+        const newFile = new File([ev], `${file.name}.jpg`, { type: "image/jpeg", lastModified: new Date().getTime() });
 
-      (document.querySelector(".media-control-post-id-" + id) as HTMLElement).classList.add("hidden");
-      (document.querySelector(".control-media-post-id-" + id) as HTMLElement).classList.remove("hidden");
+        const medUrl = URL.createObjectURL(newFile);
+        const formData = new FormData();
+        formData.append("post_id", id.toString());
+        formData.append("media", newFile);
 
-    } catch (err: any) {
-      const errors = err.response?.data?.errors ?? [{ "error": "Unknown error" }];
-      errors.map((error: any) => toast.error(error));
+        try {
+          const edit = await axios.post("/media", formData, {
+            headers: { "Content-Type": "multipart/form-data" },
+          });
+          edit.data?.post_id === id.toString() ? toast.success("Picture uploaded successfully") : toast.error("Something went wrong");
+
+          const newPosts = [...posts];
+          newPosts.forEach((post: any) => {
+            if (post.id === id) post.Media = [{
+              "url": medUrl,
+              "filename": edit.data.filename,
+            }];
+          });
+          setPosts(newPosts);
+
+          (document.querySelector(".media-post-id-" + id) as HTMLElement).innerHTML = `
+          <img className="post-media" src=${medUrl}></img>
+          `;
+
+          (document.querySelector(".media-control-post-id-" + id) as HTMLElement).classList.add("hidden");
+          (document.querySelector(".control-media-post-id-" + id) as HTMLElement).classList.remove("hidden");
+
+        } catch (err: any) {
+          const errors = err.response?.data?.errors ?? [{ "error": "Unknown error" }];
+          errors.map((error: any) => toast.error(error));
+        }
+      }, "image/jpeg");
     }
+    e.target.value = "";
   }
 
   async function uploadLink(e: any, id: number) {
@@ -228,7 +255,7 @@ export default function Feed() {
                 const md = (document.querySelectorAll(".mediacontrol"));
                 md.forEach((control: any) => control.style.visibility = "visible");
               }}>
-                <div className={"media-post-id-" + post.id}>
+                <div className={"med-div media-post-id-" + post.id}>
                   {post.Links[0]?.url
                     ?
                     <iframe
@@ -252,12 +279,12 @@ export default function Feed() {
                     </a>
 
                     <form className={((post.Links[0]?.url || post.Media[0]?.url) ? "hidden " : "") + "media-control-post-id-" + post.id}>
-                      <label htmlFor={"media-post-id-" + post.id} className="midbutton">
+                      <label htmlFor={"media-post-id-" + post.id} className="media-control-button">
                         <i className="fa-solid fa-upload"></i>upload picture
                       </label>
                       <input type="file" name="media" id={"media-post-id-" + post.id} onInput={(e) => uploadMedia(e, post.id)} className="hidden" />
 
-                      <div className="upload-link midbutton">
+                      <div className="upload-link media-control-button">
                         <input type="text" name="link" id={"link-post-id-" + post.id} placeholder="paste youtube link here" />
                         <label htmlFor={"link-post-id-" + post.id} className="" onClick={(e) => uploadLink(e, post.id)}>
                           <i className="fa-solid fa-upload"></i>upload youtube
@@ -265,11 +292,11 @@ export default function Feed() {
                       </div>
                     </form>
 
-                    <a className={(post.Links[0]?.url ? "" : "hidden ") + "midbutton font-red control-link-post-id-" + post.id} onClick={() => deleteLink(post.id)}>
+                    <a className={(post.Links[0]?.url ? "" : "hidden ") + "media-control-button font-red control-link-post-id-" + post.id} onClick={() => deleteLink(post.id)}>
                       <i className="fa-solid fa-eraser"></i>delete link
                     </a>
 
-                    <a className={(post.Media[0]?.url ? "" : "hidden ") + "midbutton font-red control-media-post-id-" + post.id} onClick={() => deleteMedia(post.id)}>
+                    <a className={(post.Media[0]?.url ? "" : "hidden ") + "media-control-button font-red control-media-post-id-" + post.id} onClick={() => deleteMedia(post.id)}>
                       <i className="fa-solid fa-eraser"></i>delete picture
                     </a>
 
@@ -285,10 +312,10 @@ export default function Feed() {
 
               {isLoggedIn ?
                 <PostControl>
-                  <a className="midbutton" onClick={() => navigate("/editpost/" + post.id)}>
+                  <a className="button" onClick={() => navigate("/editpost/" + post.id)}>
                     <i className="fa-solid fa-pen-to-square"></i>edit
                   </a>
-                  <a className="midbutton font-red"
+                  <a className="button font-red"
                     onClick={() => (document.querySelector("#confirm-atent-id-" + post.id) as HTMLDivElement).style.display = "flex"}>
                     <i className="fa-solid fa-eraser"></i>delete
                   </a>
@@ -307,6 +334,7 @@ export default function Feed() {
 
         </PostContainer>
       </PostsContainer>
+      <img alt="none" className="img_temp hidden" />
     </main >
 
   );

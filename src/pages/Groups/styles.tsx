@@ -1,5 +1,16 @@
 import styled from "styled-components";
 
+export const GroupsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px 0;
+  max-width: 1200px;
+  width: calc(100% - 40px);
+  min-height: 80vh;
+`
+
 export const GroupsEdit = styled.div`
   display: flex;
   flex-direction: column;

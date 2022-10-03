@@ -1,8 +1,8 @@
 import { useEffect, useLayoutEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "../../services/axios";
-import { Container, FilterMenu } from "../../styles/global";
-import { GroupsEdit, GroupsList } from "./styles";
+import { FilterMenu } from "../../styles/global";
+import { GroupsContainer, GroupsEdit, GroupsList } from "./styles";
 
 export const Groups = () => {
   const [groups, setGroups] = useState([]);
@@ -23,14 +23,9 @@ export const Groups = () => {
     <main>
       <div className="bg-blues"></div>
 
-      <Container>
+      <GroupsContainer>
         <FilterMenu>
-          <ul>
-            <li key="back"><Link className="midbutton" to="/feed"><i className="fa-solid fa-arrow-left"></i>back</Link></li>
-          </ul>
-          <ul>
-            <li key="groups"><Link className="midbutton" to="/groups"><i className="fa-solid fa-object-group"></i>groups</Link></li>
-          </ul>
+          <Link className="midbutton" to="/feed"><i className="fa-solid fa-arrow-left"></i>back</Link>
         </FilterMenu>
         <GroupsEdit className="box">
           <h2>Groups</h2>
@@ -54,7 +49,7 @@ export const Groups = () => {
           </GroupsList>
 
         </GroupsEdit>
-      </Container>
+      </GroupsContainer>
     </main>
   );
 };

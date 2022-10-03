@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "../../services/axios";
 import { Container, FilterMenu } from "../../styles/global";
-import { PostCreate } from "./styles";
+import { NewPostContainer, PostCreate } from "./styles";
 
 export default function NewPost() {
   const navigate = useNavigate();
@@ -70,7 +70,7 @@ export default function NewPost() {
     <main>
       <div className="bg-blues"></div>
 
-      <Container>
+      <NewPostContainer>
         <FilterMenu>
           <Link className="midbutton" to="/feed"><i className="fa-solid fa-arrow-left"></i>back</Link>
           <Link className="midbutton" to="/groups"><i className="fa-solid fa-object-group"></i>groups</Link>
@@ -101,7 +101,7 @@ export default function NewPost() {
             <input type="submit" value="Create" />
           </form>
         </PostCreate>
-      </Container>
+      </NewPostContainer>
     </main>
   );
 };

@@ -59,6 +59,10 @@ export const PostMedia = styled.div`
   img {
     box-shadow: 0 0 5px #000;
   }
+
+  .med-div {
+    min-height: 100%;
+  }
 `
 
 export const PostTexts = styled.div`
@@ -86,6 +90,28 @@ export const PostControl = styled.div`
   a {
     text-decoration: none;
   }
+
+  .button {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    padding: 10px 20px;
+    border: 1px solid #888;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #000;
+    gap: 5px;
+    font-size: 16px;
+  }
+
+  .button:hover {
+    background: #a3d0e5;
+  }
+
+  .button:active {
+    background: #027db6;
+  }
+
 `
 export const Filters = styled.ul`
   display: flex;
@@ -147,6 +173,22 @@ export const MediaControl = styled.div`
     color: #fff;
     font-size: 30px;
   }
+
+  .media-control-button {
+    display: flex;
+    background: #fff;
+    padding: 10px 20px;
+    border: 0;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #000;
+    gap: 5px;
+    font-size: 16px;
+
+    label {
+      flex: 0 0 auto;
+    }
+  }
 `
 
 export const ConfirmAtent = styled.div`
@@ -171,14 +213,13 @@ export const ConfirmAtent = styled.div`
 
   button {
     display: flex;
-    align-items: center;
     background: #fff;
     padding: 10px 20px;
-    border: 1px solid #027db6;
+    border: 0;
     border-radius: 8px;
     cursor: pointer;
     color: #000;
     gap: 5px;
-    font-size: 15px;
+    font-size: 16px;
   }
 `
