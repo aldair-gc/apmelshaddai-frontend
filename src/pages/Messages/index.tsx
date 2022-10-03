@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import axios from "../../services/axios";
 import { AllMessagesContainer, Message, MessageContainer, MessageContent, MessageControl, MessageHeaders } from "./styles";
 
@@ -11,7 +11,11 @@ export const Messages = () => {
       setMessages(dataMessages.data);
     }
     getData();
-  }, [])
+  }, []);
+
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0)
+  });
 
   return (
     <main>

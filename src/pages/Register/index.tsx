@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import isEmail from "validator/lib/isEmail";
@@ -46,6 +46,10 @@ export const Register = () => {
       errors.map((error: any) => toast.error(error));
     }
   }
+
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0)
+  });
 
   return (
     <main>

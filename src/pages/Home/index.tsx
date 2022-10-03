@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import "./style.css";
 import logo from "../../assets/images/logo-bg-png.png";
+import { useLayoutEffect } from "react";
 
 const carousels = document.getElementsByClassName("carousel_activator") as HTMLCollectionOf<HTMLInputElement>;
 
@@ -16,6 +17,11 @@ setInterval(function rotate() {
 }, 5000);
 
 export const Home = () => {
+
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0)
+  });
+
   return (
     <main>
       <div className="intro">

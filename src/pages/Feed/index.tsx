@@ -5,6 +5,7 @@ import { ConfirmAtent, Filters, MediaControl, Post, PostContainer, PostContent, 
 import { FilterMenu } from "../../styles/global";
 import axios from "../../services/axios";
 import { useAppSelector } from "../../app/hooks";
+import heic2any from "heic2any";
 
 interface Group {
   group: string;
@@ -49,12 +50,31 @@ export default function Feed() {
   const filteredPosts = filter != "0" ? posts.filter((post: any) => post.group == filter) : [];
 
   async function uploadMedia(e: any, id: number) {
-    const med = e.target.files[0];
+    if (!e.target.files[0]) {
+      e.target.value = "";
+      toast.error("Error uploading picture");
+      return;
+    };
+
+    let file = e.target.files[0];
+
+    if (file.type === "image/heic") {
+      const converted: any = await heic2any({ blob: file, toType: "image/jpeg" });
+      file = new File([converted], `${file.name}.jpg`, { type: "image/jpeg", lastModified: new Date().getTime() });
+    }
+
+    if (file.type !== "image/jpeg") {
+      toast.error("This file is not valid");
+      e.target.value = "";
+      return;
+    };
+
     e.target.value = "";
-    const medUrl = URL.createObjectURL(med);
+    const medUrl = URL.createObjectURL(file);
     const formData = new FormData();
     formData.append("post_id", id.toString());
-    formData.append("media", med);
+    formData.append("media", file);
+
     try {
       const edit = await axios.post("/media", formData, {
         headers: { "Content-Type": "multipart/form-data" },
@@ -85,7 +105,12 @@ export default function Feed() {
 
   async function uploadLink(e: any, id: number) {
     const lnk = e.target.previousElementSibling.value;
-    if (!lnk) toast.error("Paste an YouTube URL firstly");
+
+    if (!lnk) {
+      toast.error("Paste an YouTube URL firstly");
+      return;
+    };
+
     try {
       const edit = await axios.post("/link", { "url": lnk, "post_id": id.toString() });
       edit.data?.post_id === id.toString() ? toast.success("Link uploaded successfully") : toast.error("Something went wrong");
@@ -235,7 +260,7 @@ export default function Feed() {
                       <div className="upload-link midbutton">
                         <input type="text" name="link" id={"link-post-id-" + post.id} placeholder="paste youtube link here" />
                         <label htmlFor={"link-post-id-" + post.id} className="" onClick={(e) => uploadLink(e, post.id)}>
-                          <i className="fa-solid fa-upload"></i>upload youtube link
+                          <i className="fa-solid fa-upload"></i>upload youtube
                         </label>
                       </div>
                     </form>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "../../services/axios";
 import { Container, FilterMenu } from "../../styles/global";
@@ -14,6 +14,10 @@ export const Groups = () => {
     }
     getData();
   }, []);
+
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0)
+  });
 
   return (
     <main>

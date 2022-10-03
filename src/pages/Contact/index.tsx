@@ -1,6 +1,12 @@
+import { useLayoutEffect } from "react";
 import { MapSquare } from "./style";
 
 export const Contact = () => {
+
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0)
+  });
+
   return (
     <main>
       <div className="bg-blues"></div>

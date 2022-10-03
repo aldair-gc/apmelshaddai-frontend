@@ -12,16 +12,10 @@ inst.interceptors.request.use(
     const token = localStorage.getItem("token");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
-    } else {
-      console.log("axios auth error")
-      // store.dispatch(logout());
-      // config.headers.Authorization = ``;
-      // localStorage.setItem("token", "");
-      // window.location = "/login";
     }
     return config;
   }
-)
+);
 
 inst.interceptors.response.use(
   (response) => {
@@ -29,6 +23,7 @@ inst.interceptors.response.use(
   },
   async function (error) {
     toast.error("There was a problem. Login required.")
+    console.log("AXIOS ERROR: response", error)
     return Promise.reject(error);
   }
 );

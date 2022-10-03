@@ -1,8 +1,14 @@
+import { useLayoutEffect } from "react";
 import { Link } from "react-router-dom";
 import { AuthLogout } from "../../app/auth/Logout";
 import { MenuBox } from "./style";
 
 export const Management = () => {
+
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0)
+  });
+
   return (
     <main>
       <div className="bg-blues"></div>

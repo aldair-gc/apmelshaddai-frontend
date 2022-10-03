@@ -8,8 +8,9 @@
   width: 100%;
   overflow: hidden;
   background-image: url("../../assets/images/zac-durant-_6HzPU9Hyfg-unsplash.jpg");
-  background-position: center center;
+  background-position: center;
   background-attachment: fixed;
+  background-repeat: no-repeat;
   background-size: cover;
 }
 

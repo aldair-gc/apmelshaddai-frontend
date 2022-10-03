@@ -14,7 +14,8 @@ export function AuthLogin() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { state } = useLocation();
+
+  const prevPath = useLocation()?.state?.prevPath ?? "/";
 
   async function handleSubmit(e: any) {
     e.preventDefault();
@@ -36,17 +37,17 @@ export function AuthLogin() {
       dispatch(authRequest());
       const response = await axios.post("/token", { email, password });
       if (response.data.token) {
+        dispatch(authSuccess(response.data));
         axios.defaults.headers.common["Authorization"] = `Bearer ${response.data.token}`;
         localStorage.setItem("token", response.data.token);
-        dispatch(authSuccess(response.data));
+        navigate(prevPath);
         toast.success(`Welcome ` + response.data.user.name);
-        navigate(state.prevPath || "/");
       } else {
         dispatch(authFailure());
         toast.error("Something went wrong...")
       }
     } catch (err: any) {
-      const errors = err.response?.data?.errors ?? [];
+      const errors = err.response?.data?.errors ?? [{ "error": "Unknown error" }];
       errors.map((error: any) => toast.error(error));
     }
   }
