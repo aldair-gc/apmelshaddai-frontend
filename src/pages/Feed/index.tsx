@@ -6,6 +6,7 @@ import { FilterMenu } from "../../styles/global";
 import axios from "../../services/axios";
 import { useAppSelector } from "../../app/hooks";
 import heic2any from "heic2any";
+import { Loading } from "../../components/Loading";
 
 interface Group {
   group: string;
@@ -27,18 +28,22 @@ interface Post {
 }
 
 export default function Feed() {
+
   const navigate = useNavigate();
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
   const [posts, setPosts] = useState<Post[]>([]);
   const [groups, setGroups] = useState<Group[]>([]);
   const [filter, setFilter] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function getData() {
+      setIsLoading(true);
       const dataGroups = await axios.get('/group');
       setGroups(dataGroups.data);
       const dataPosts = await axios.get('/post');
       setPosts(dataPosts.data);
+      setIsLoading(false);
     }
     getData();
   }, []);
@@ -50,8 +55,10 @@ export default function Feed() {
   const filteredPosts = filter != "0" ? posts.filter((post: any) => post.group == filter) : [];
 
   async function uploadMedia(e: any, id: number) {
+    setIsLoading(true);
     if (!e.target.files[0]) {
       e.target.value = "";
+      setIsLoading(false);
       toast.error("Error uploading picture");
       return;
     };
@@ -100,6 +107,7 @@ export default function Feed() {
         formData.append("media", newFile);
 
         try {
+          setIsLoading(true);
           const edit = await axios.post("/media", formData, {
             headers: { "Content-Type": "multipart/form-data" },
           });
@@ -120,10 +128,11 @@ export default function Feed() {
 
           (document.querySelector(".media-control-post-id-" + id) as HTMLElement).classList.add("hidden");
           (document.querySelector(".control-media-post-id-" + id) as HTMLElement).classList.remove("hidden");
-
+          setIsLoading(false);
         } catch (err: any) {
           const errors = err.response?.data?.errors ?? [{ "error": "Unknown error" }];
           errors.map((error: any) => toast.error(error));
+          setIsLoading(false);
         }
       }, "image/jpeg");
     }
@@ -134,11 +143,14 @@ export default function Feed() {
     const lnk = e.target.previousElementSibling.value;
 
     if (!lnk) {
+      setIsLoading(false);
       toast.error("Paste an YouTube URL firstly");
+      setIsLoading(true);
       return;
     };
 
     try {
+      setIsLoading(true);
       const edit = await axios.post("/link", { "url": lnk, "post_id": id.toString() });
       edit.data?.post_id === id.toString() ? toast.success("Link uploaded successfully") : toast.error("Something went wrong");
 
@@ -159,15 +171,17 @@ export default function Feed() {
 
       (document.querySelector(".media-control-post-id-" + id) as HTMLElement).classList.add("hidden");
       (document.querySelector(".control-link-post-id-" + id) as HTMLElement).classList.remove("hidden");
-
+      setIsLoading(false);
     } catch (err: any) {
       const errors = err.response?.data?.errors ?? [{ "error": "Unknown error" }];
       errors.map((error: any) => toast.error(error));
-    }
+      setIsLoading(false);
+    };
   }
 
   async function deleteMedia(id: number) {
     try {
+      setIsLoading(true);
       const del = await axios.delete("/media/" + id);
       del.data?.mediaDeleted === true ? toast.success("Media deleted from post") : toast.error("Something went wrong");
 
@@ -182,15 +196,17 @@ export default function Feed() {
       `;
       (document.querySelector(".media-control-post-id-" + id) as HTMLElement).classList.remove("hidden");
       (document.querySelector(".control-media-post-id-" + id) as HTMLElement).classList.add("hidden");
-
+      setIsLoading(false);
     } catch (err: any) {
       const errors = err.response?.data?.errors ?? [{ "error": "Unknown error" }];
       errors.map((error: any) => toast.error(error));
+      setIsLoading(false);
     }
   }
 
   async function deleteLink(id: number) {
     try {
+      setIsLoading(true);
       const del = await axios.delete("/link/" + id);
       del.data?.mediaDeleted === true ? toast.success("Link deleted from post") : toast.error("Something went wrong");
 
@@ -205,29 +221,33 @@ export default function Feed() {
       `;
       (document.querySelector(".media-control-post-id-" + id) as HTMLElement).classList.remove("hidden");
       (document.querySelector(".control-link-post-id-" + id) as HTMLElement).classList.add("hidden");
-
+      setIsLoading(false);
     } catch (err: any) {
       const errors = err.response?.data?.errors ?? [{ "error": "Unknown error" }];
       errors.map((error: any) => toast.error(error));
-    }
+      setIsLoading(false);
+    };
   }
 
   async function deletePost(id: number) {
     try {
+      setIsLoading(true);
       const del = await axios.delete("/post/" + id);
       del.data?.postDeleted === true ? toast.success("Post deleted successfully") : toast.error("Something went wrong");
 
       const newPosts = posts.filter((post: any) => (post.id !== id));
       setPosts(newPosts);
-
+      setIsLoading(false);
     } catch (err: any) {
       const errors = err.response?.data?.errors ?? [{ "error": "Unknown error" }];
       errors.map((error: any) => toast.error(error));
+      setIsLoading(false);
     }
   }
 
   return (
     <main>
+      {isLoading && <Loading />}
       <div className="bg-blues"></div>
       <PostsContainer>
         <FilterMenu>

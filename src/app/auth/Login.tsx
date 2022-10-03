@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import isEmail from "validator/lib/isEmail";
+import { Loading } from "../../components/Loading";
 import axios from "../../services/axios";
 import { useAppSelector, useAppDispatch } from "../hooks";
 import { authRequest, authSuccess, authFailure } from "./authSlice";
@@ -78,6 +79,8 @@ export function AuthLogin() {
         />
         <button onClick={handleSubmit}>Login</button>
       </form>
+
+      {auth.isLoading && <Loading />}
     </div>
   )
 }

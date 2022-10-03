@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { Loading } from "../../components/Loading";
 import axios from "../../services/axios";
 import { Container, FilterMenu } from "../../styles/global";
 import { NewPostContainer, PostCreate } from "./styles";
@@ -8,11 +9,14 @@ import { NewPostContainer, PostCreate } from "./styles";
 export default function NewPost() {
   const navigate = useNavigate();
   const [groups, setGroups] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     async function getData() {
+      setIsLoading(true);
       const dataGroups = await axios.get('/group');
       setGroups(dataGroups.data);
+      setIsLoading(false);
     }
     getData();
   }, []);
@@ -48,6 +52,7 @@ export default function NewPost() {
 
     if (!errors) {
       try {
+        setIsLoading(true);
         const response = await axios.post("/post", { group, title, text });
         if (response.status === 200) {
           toast.success("Post created");
@@ -55,9 +60,11 @@ export default function NewPost() {
         } else {
           toast.error("Something went wrong");
         }
+        setIsLoading(false);
       } catch (err: any) {
         const errors = err.response?.data?.errors ?? [];
         errors.map((error: any) => toast.error(error));
+        setIsLoading(false);
       }
     }
   }
@@ -102,6 +109,7 @@ export default function NewPost() {
           </form>
         </PostCreate>
       </NewPostContainer>
+      {isLoading && <Loading />}
     </main>
   );
 };

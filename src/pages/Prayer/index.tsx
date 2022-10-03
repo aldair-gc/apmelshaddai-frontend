@@ -1,6 +1,7 @@
-import { useLayoutEffect } from "react";
+import { useLayoutEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { Loading } from "../../components/Loading";
 import axios from "../../services/axios";
 import { Container, FilterMenu } from "../../styles/global";
 import { PostCreate } from "./style";
@@ -8,6 +9,7 @@ import { PostCreate } from "./style";
 
 export const Prayer = () => {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   async function handleSubmit(e: any) {
     e.preventDefault();
@@ -19,6 +21,7 @@ export const Prayer = () => {
     }
 
     try {
+      setIsLoading(true);
       const response = await axios.post("/prayer", form);
       if (response.status === 200) {
         toast.success("Message sent");
@@ -26,9 +29,11 @@ export const Prayer = () => {
       } else {
         toast.error("Something went wrong");
       }
+      setIsLoading(false);
     } catch (err: any) {
       const errors = err.response?.data?.errors ?? [{ "error": "Unknow error" }];
       errors.map((error: any) => toast.error(error));
+      setIsLoading(false);
     }
   }
 
@@ -67,6 +72,7 @@ export const Prayer = () => {
         </PostCreate>
 
       </Container>
+      {isLoading && <Loading />}
     </main>
   );
 };

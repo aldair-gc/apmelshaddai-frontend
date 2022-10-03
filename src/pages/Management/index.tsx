@@ -12,7 +12,6 @@ export const Management = () => {
   return (
     <main>
       <div className="bg-blues"></div>
-
       <div className="center-center">
         <MenuBox className="box">
           <h1>Management</h1>
@@ -25,8 +24,6 @@ export const Management = () => {
           <AuthLogout />
         </MenuBox>
       </div>
-
     </main>
-
   );
 };

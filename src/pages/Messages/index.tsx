@@ -1,14 +1,18 @@
 import { useEffect, useLayoutEffect, useState } from "react";
+import { Loading } from "../../components/Loading";
 import axios from "../../services/axios";
 import { AllMessagesContainer, Message, MessageContainer, MessageContent, MessageControl, MessageHeaders } from "./styles";
 
 export const Messages = () => {
   const [messages, setMessages] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     async function getData() {
+      setIsLoading(true);
       const dataMessages = await axios.get("/prayer");
       setMessages(dataMessages.data);
+      setIsLoading(false);
     }
     getData();
   }, []);
@@ -52,6 +56,7 @@ export const Messages = () => {
 
         </MessageContainer>
       </AllMessagesContainer>
+      {isLoading && <Loading />}
     </main>
   );
 };

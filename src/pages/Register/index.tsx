@@ -2,15 +2,18 @@ import { useLayoutEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import isEmail from "validator/lib/isEmail";
+import { Loading } from "../../components/Loading";
 import axios from "../../services/axios";
 import { Container, SmallBox } from "../../styles/global";
 
 export const Register = () => {
   const navigate = useNavigate();
+  const { state } = useLocation();
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { state } = useLocation();
+  const [isLoading, setIsLoading] = useState(false);
 
   async function handleSubmit(e: any) {
     e.preventDefault();
@@ -34,6 +37,7 @@ export const Register = () => {
     if (formErrors) return;
 
     try {
+      setIsLoading(true);
       const response = await axios.post("/user", { name, email, password });
       if (response.status === 200) {
         toast.success("New user created");
@@ -41,9 +45,11 @@ export const Register = () => {
       } else {
         toast.error("Something went wrong...")
       }
+      setIsLoading(false);
     } catch (err: any) {
       const errors = err.response?.data?.errors ?? [];
       errors.map((error: any) => toast.error(error));
+      setIsLoading(false);
     }
   }
 
@@ -97,6 +103,7 @@ export const Register = () => {
 
         </div>
       </Container>
+      {isLoading && <Loading />}
     </main>
   );
 };

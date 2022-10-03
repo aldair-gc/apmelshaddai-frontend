@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { Loading } from "../../components/Loading";
 import axios from "../../services/axios";
 import { Container, FilterMenu } from "../../styles/global";
 import { PostCreate } from "./styles";
@@ -25,20 +26,24 @@ export default function EditPost() {
   const [post, setPost] = useState<Post>(Object);
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     async function getData() {
+      setIsLoading(true);
       const dataGroups = await axios.get('/group');
       setGroups(dataGroups.data);
       const dataPost = await axios.get("/post/" + id);
       setPost(dataPost.data);
       setTitle(dataPost.data.title);
       setText(dataPost.data.text);
+      setIsLoading(false);
     }
     getData();
   }, []);
 
   async function handleSubmit(e: any) {
+    setIsLoading(true);
     e.preventDefault();
     let errors = false;
     const inputs = document.querySelectorAll("input[name=group]");
@@ -74,9 +79,11 @@ export default function EditPost() {
         } else {
           toast.error("Something went wrong");
         }
+        setIsLoading(false);
       } catch (err: any) {
         const errors = err.response?.data?.errors ?? [];
         errors.map((error: any) => toast.error(error));
+        setIsLoading(false);
       }
     }
   }
@@ -124,6 +131,7 @@ export default function EditPost() {
           </form>
         </PostCreate>
       </Container>
+      <Loading />
     </main>
   );
 };

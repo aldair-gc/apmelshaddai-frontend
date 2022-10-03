@@ -1,16 +1,20 @@
 import { useEffect, useLayoutEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { Loading } from "../../components/Loading";
 import axios from "../../services/axios";
 import { FilterMenu } from "../../styles/global";
 import { GroupsContainer, GroupsEdit, GroupsList } from "./styles";
 
 export const Groups = () => {
   const [groups, setGroups] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     async function getData() {
+      setIsLoading(true);
       const dataGroups = await axios.get('/group');
       setGroups(dataGroups.data);
+      setIsLoading(false);
     }
     getData();
   }, []);
@@ -50,6 +54,7 @@ export const Groups = () => {
 
         </GroupsEdit>
       </GroupsContainer>
+      {isLoading && <Loading />}
     </main>
   );
 };
