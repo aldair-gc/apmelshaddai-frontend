@@ -2,8 +2,7 @@ import { useState, useEffect } from "react";
 import { PostContainer } from "./styles";
 import { ButtonBar, Filters } from "../../styles/global";
 import axios from "../../services/axios";
-import MakePost, { Props as Post } from "./post";
-import { useAppSelector } from "../../app/hooks";
+import MakePost, { Post } from "./post";
 import { Link } from "react-router-dom";
 
 interface Group {
@@ -15,7 +14,6 @@ export default function Feed() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [groups, setGroups] = useState<Group[]>([]);
   const [filter, setFilter] = useState("");
-  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
 
   useEffect(() => {
     async function getData() {
@@ -26,7 +24,6 @@ export default function Feed() {
     }
     getData();
   }, []);
-
 
   function filterSelect(e: any) {
     setFilter(e.target.id)
@@ -57,7 +54,7 @@ export default function Feed() {
       <PostContainer>
 
         {(filteredPosts.length > 0 ? filteredPosts : posts).map((post: Post) => (
-          <MakePost key={post.id} {...post} isLoggedIn={isLoggedIn} />
+          <MakePost key={post.id} {...post} />
         ))}
 
       </PostContainer>
