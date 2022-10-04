@@ -1,15 +1,13 @@
-import { Component, ReactPropTypes, useState } from "react";
+import { Component, useState } from "react";
 import { toast } from "react-toastify";
-import { useAppSelector } from "../../app/hooks";
 import ConfirmAction from "../../components/ConfirmAction";
 import heic2any from "heic2any";
 import { MediaControl, Post, PostContent, PostControl, PostMedia, PostTexts, PostTitle } from "./styles";
 import axios from "../../services/axios";
-import { useNavigate } from "react-router-dom";
 import { Loading } from "../../components/Loading";
-import { render } from "react-dom";
+import { Link } from "react-router-dom";
 
-interface Post {
+export interface Props {
   id: number;
   group: string;
   title: string;
@@ -17,36 +15,31 @@ interface Post {
   Media: [{
     url: string;
     filename: string;
-  }],
+  }];
   Links: [{
     url: string;
-  }],
+  }];
+  isLoggedIn: boolean,
 };
 
 interface State {
-  isLoggedIn: boolean,
   isLoading: boolean,
-}
+};
 
-export default class MakePost extends Component<Post, State> {
-  Post: Post;
-  state: State;
-
-  constructor(props: any, Post: Post, state: State) {
-    super(props);
-    this.Post = Post;
-    this.state = { isLoggedIn: useAppSelector(state => state.auth.isLoggedIn) };
-    this.state = { isLoading: false };
+export default class MakePost extends Component<Props, State> {
+  constructor(props: Props) {
+    super(props)
+    this.state = {
+      isLoading: false
+    };
   };
-
-  static navigate = useNavigate();
 
   uploadMedia = async (e: any, id: number) => {
     this.setState({ isLoading: true });
     if (!e.target.files[0]) {
       e.target.value = "";
       toast.error("Error uploading picture");
-      this.setState({ IsLoading: false });
+      this.setState({ isLoading: false });
       return;
     };
 
@@ -105,16 +98,16 @@ export default class MakePost extends Component<Post, State> {
 
           (document.querySelector(".media-control-post-id-" + id) as HTMLElement).classList.add("hidden");
           (document.querySelector(".control-media-post-id-" + id) as HTMLElement).classList.remove("hidden");
-          this.setState({ setIsLoading: false });
+          this.setState({ isLoading: false });
         } catch (err: any) {
           const errors = err.response?.data?.errors ?? [{ "error": "Unknown error" }];
           errors.map((error: any) => toast.error(error));
-          this.setState({ setIsLoading: false });
+          this.setState({ isLoading: false });
         }
       }, "image/jpeg");
     }
     e.target.value = "";
-    this.setState({ setIsLoading: false });
+    this.setState({ isLoading: false });
   };
 
   uploadLink = async (e: any, id: number) => {
@@ -126,7 +119,7 @@ export default class MakePost extends Component<Post, State> {
     };
 
     try {
-      this.setState({ setIsLoading: true });
+      this.setState({ isLoading: true });
       const edit = await axios.post("/link", { "url": lnk, "post_id": id.toString() });
       edit.data?.post_id === id.toString() ? toast.success("Link uploaded successfully") : toast.error("Something went wrong");
 
@@ -139,17 +132,17 @@ export default class MakePost extends Component<Post, State> {
 
       (document.querySelector(".media-control-post-id-" + id) as HTMLElement).classList.add("hidden");
       (document.querySelector(".control-link-post-id-" + id) as HTMLElement).classList.remove("hidden");
-      this.setState({ setIsLoading: false });
+      this.setState({ isLoading: false });
     } catch (err: any) {
       const errors = err.response?.data?.errors ?? [{ "error": "Unknown error" }];
       errors.map((error: any) => toast.error(error));
-      this.setState({ setIsLoading: false });
+      this.setState({ isLoading: false });
     };
   };
 
   deleteMedia = async (id: number) => {
     try {
-      this.setState({ setIsLoading: true });
+      this.setState({ isLoading: true });
       const del = await axios.delete("/media/" + id);
       del.data?.mediaDeleted === true ? toast.success("Media deleted from post") : toast.error("Something went wrong");
 
@@ -158,17 +151,17 @@ export default class MakePost extends Component<Post, State> {
       `;
       (document.querySelector(".media-control-post-id-" + id) as HTMLElement).classList.remove("hidden");
       (document.querySelector(".control-media-post-id-" + id) as HTMLElement).classList.add("hidden");
-      this.setState({ setIsLoading: false });
+      this.setState({ isLoading: false });
     } catch (err: any) {
       const errors = err.response?.data?.errors ?? [{ "error": "Unknown error" }];
       errors.map((error: any) => toast.error(error));
-      this.setState({ setIsLoading: false });
+      this.setState({ isLoading: false });
     }
   };
 
   deleteLink = async (id: number) => {
     try {
-      this.setState({ setIsLoading: true });
+      this.setState({ isLoading: true });
       const del = await axios.delete("/link/" + id);
       del.data?.mediaDeleted === true ? toast.success("Link deleted from post") : toast.error("Something went wrong");
 
@@ -177,17 +170,17 @@ export default class MakePost extends Component<Post, State> {
       `;
       (document.querySelector(".media-control-post-id-" + id) as HTMLElement).classList.remove("hidden");
       (document.querySelector(".control-link-post-id-" + id) as HTMLElement).classList.add("hidden");
-      this.setState({ setIsLoading: false });
+      this.setState({ isLoading: false });
     } catch (err: any) {
       const errors = err.response?.data?.errors ?? [{ "error": "Unknown error" }];
       errors.map((error: any) => toast.error(error));
-      this.setState({ setIsLoading: false });
+      this.setState({ isLoading: false });
     };
   };
 
   deletePost = async (id: number) => {
     try {
-      this.setState({ setIsLoading: true });
+      this.setState({ isLoading: true });
       const del = await axios.delete("/post/" + id);
       del.data?.postDeleted === true ? toast.success("Post deleted successfully") : toast.error("Something went wrong");
 
@@ -195,37 +188,37 @@ export default class MakePost extends Component<Post, State> {
 
       // const newPosts = posts.filter((post: any) => (post.id !== id));
       // setPosts(newPosts);
-      this.setState({ setIsLoading: false });
+      this.setState({ isLoading: false });
     } catch (err: any) {
       const errors = err.response?.data?.errors ?? [{ "error": "Unknown error" }];
       errors.map((error: any) => toast.error(error));
-      this.setState({ setIsLoading: false });
+      this.setState({ isLoading: false });
     }
   };
 
   render() {
     return (
-      <Post key={this.Post.id} className={"group" + this.Post.group + " post-id-" + this.Post.id}>
+      <Post key={this.props.id} className={"group" + this.props.group + " post-id-" + this.props.id}>
 
         <PostMedia onMouseLeave={() => {
           const md = (document.querySelectorAll(".mediacontrol"));
           md.forEach((control: any) => control.style.visibility = "visible");
         }}>
-          <div className={"med-div media-post-id-" + this.Post.id}>
-            {this.Post.Links[0]?.url
+          <div className={"med-div media-post-id-" + this.props.id}>
+            {this.props.Links[0]?.url
               ?
               <iframe
-                src={"https://www.youtube.com/embed/" + this.Post.Links[0].url.split("/")[3]} title="YouTube video player" frameBorder="0"
+                src={"https://www.youtube.com/embed/" + this.props.Links[0].url.split("/")[3]} title="YouTube video player" frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen>
               </iframe>
               :
-              <img className="post-media" src={this.Post.Media[0]?.url ?? "https://apmelshaddai-server.aldairgc.com/medias/1663702606334_14165.jpg"}></img>
+              <img className="post-media" src={this.props.Media[0]?.url ?? "https://apmelshaddai-server.aldairgc.com/medias/1663702606334_14165.jpg"}></img>
             }
           </div>
-          {this.state.isLoggedIn ?
-            <MediaControl className={"mediacontrol mediacontrol-post-id" + this.Post.id}>
+          {this.props.isLoggedIn ?
+            <MediaControl className={"mediacontrol mediacontrol-post-id" + this.props.id}>
 
-              <a className={"control-close-btn control-close-post-id-" + this.Post.id} onClick={() => {
+              <a className={"control-close-btn control-close-post-id-" + this.props.id} onClick={() => {
                 const md = document.querySelectorAll(".mediacontrol");
                 md.forEach((control: any) => {
                   control.style.visibility = "hidden"
@@ -234,25 +227,25 @@ export default class MakePost extends Component<Post, State> {
                 <i className="fa-solid fa-circle-xmark"></i>
               </a>
 
-              <form className={((this.Post.Links[0]?.url || this.Post.Media[0]?.url) ? "hidden " : "") + "media-control-post-id-" + this.Post.id}>
-                <label htmlFor={"media-post-id-" + this.Post.id} className="media-control-button">
+              <form className={((this.props.Links[0]?.url || this.props.Media[0]?.url) ? "hidden " : "") + "media-control-post-id-" + this.props.id}>
+                <label htmlFor={"media-post-id-" + this.props.id} className="media-control-button">
                   <i className="fa-solid fa-upload"></i>upload picture
                 </label>
-                <input type="file" name="media" id={"media-post-id-" + this.Post.id} onInput={(e) => this.uploadMedia(e, this.Post.id)} className="hidden" />
+                <input type="file" name="media" id={"media-post-id-" + this.props.id} onInput={(e) => this.uploadMedia(e, this.props.id)} className="hidden" />
 
                 <div className="upload-link media-control-button">
-                  <input type="text" name="link" id={"link-post-id-" + this.Post.id} placeholder="paste youtube link here" />
-                  <label htmlFor={"link-post-id-" + this.Post.id} className="" onClick={(e) => this.uploadLink(e, this.Post.id)}>
+                  <input type="text" name="link" id={"link-post-id-" + this.props.id} placeholder="paste youtube link here" />
+                  <label htmlFor={"link-post-id-" + this.props.id} className="" onClick={(e) => this.uploadLink(e, this.props.id)}>
                     <i className="fa-solid fa-upload"></i>upload youtube
                   </label>
                 </div>
               </form>
 
-              <a className={(this.Post.Links[0]?.url ? "" : "hidden ") + "media-control-button font-red control-link-post-id-" + this.Post.id} onClick={() => this.deleteLink(this.Post.id)}>
+              <a className={(this.props.Links[0]?.url ? "" : "hidden ") + "media-control-button font-red control-link-post-id-" + this.props.id} onClick={() => this.deleteLink(this.props.id)}>
                 <i className="fa-solid fa-eraser"></i>delete link
               </a>
 
-              <a className={(this.Post.Media[0]?.url ? "" : "hidden ") + "media-control-button font-red control-media-post-id-" + this.Post.id} onClick={() => this.deleteMedia(this.Post.id)}>
+              <a className={(this.props.Media[0]?.url ? "" : "hidden ") + "media-control-button font-red control-media-post-id-" + this.props.id} onClick={() => this.deleteMedia(this.props.id)}>
                 <i className="fa-solid fa-eraser"></i>delete picture
               </a>
 
@@ -262,26 +255,26 @@ export default class MakePost extends Component<Post, State> {
         </PostMedia>
 
         <PostTexts>
-          <PostTitle>{this.Post.title}</PostTitle>
-          <PostContent>{this.Post.text}</PostContent>
+          <PostTitle>{this.props.title}</PostTitle>
+          <PostContent>{this.props.text}</PostContent>
         </PostTexts>
 
-        {this.state.isLoggedIn ?
+        {this.props.isLoggedIn ?
           <PostControl>
-            <a className="button" onClick={() => MakePost.navigate("/editpost/" + this.Post.id)}>
+            <Link to={"/editpost/" + this.props.id} className="button">
               <i className="fa-solid fa-pen-to-square"></i>edit
-            </a>
+            </Link>
             <a className="button font-red"
-              onClick={() => (document.querySelector("#confirm-action-id-" + this.Post.id) as HTMLDivElement).style.display = "flex"}>
+              onClick={() => (document.querySelector("#confirm-action-id-" + this.props.id) as HTMLDivElement).style.display = "flex"}>
               <i className="fa-solid fa-eraser"></i>delete
             </a>
           </PostControl>
           : ""}
 
-        <ConfirmAction id={this.Post.id} text="Confirm deletion?" action={() => this.deletePost(this.Post.id)} />
+        <ConfirmAction id={this.props.id} text="Confirm deletion?" action={() => this.deletePost(this.props.id)} />
         {this.state.isLoading && <Loading />}
       </Post>
 
     )
   }
-};
+}

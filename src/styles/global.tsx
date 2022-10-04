@@ -221,9 +221,6 @@ export default createGlobalStyle`
   /* RESPONSIVENESS - SMALL HEIGHT */
 
   @media (max-height: 700px) {
-    .posts-content {
-      font-size: 10px;
-    }
 
     #home-options a {
       width: 120px;
