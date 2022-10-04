@@ -1,22 +1,14 @@
 import styled from "styled-components";
 
-export const PostsContainer = styled.div`
-  padding-top: 10px;
-  padding-bottom: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  justify-content: center;
-  align-items: center;
-`
-
 export const PostContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   gap: 20px;
   width: 100%;
-`
+  padding-bottom: 20px;
+  `
 
 export const Post = styled.div`
 position: relative;
@@ -97,7 +89,7 @@ export const PostControl = styled.div`
     background: #fff;
     padding: 10px 20px;
     border: 1px solid #888;
-    border-radius: 8px;
+    border-radius: 5px;
     cursor: pointer;
     color: #000;
     gap: 5px;
@@ -111,19 +103,8 @@ export const PostControl = styled.div`
   .button:active {
     background: #027db6;
   }
-
 `
-export const Filters = styled.ul`
-  display: flex;
-  flex-wrap: wrap;
-  padding: 10px;
-  list-style: none;
-  gap: 10px;
 
-  label:has(input:checked) {
-    background: #a3d0e5;
-  }
-`
 export const MediaControl = styled.div`
   position: absolute;
   display: flex;
@@ -179,7 +160,7 @@ export const MediaControl = styled.div`
     background: #fff;
     padding: 10px 20px;
     border: 0;
-    border-radius: 8px;
+    border-radius: 5px;
     cursor: pointer;
     color: #000;
     gap: 5px;
@@ -188,38 +169,5 @@ export const MediaControl = styled.div`
     label {
       flex: 0 0 auto;
     }
-  }
-`
-
-export const ConfirmAtent = styled.div`
-  position: absolute;
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.5);
-  backdrop-filter: blur(5px);
-  color: #fff;
-  font-size: 25px;
-  text-shadow: 0 0 5px #000;
-
-  .options {
-    display: flex;
-    gap: 10px;
-    padding: 10px;
-  }
-
-  button {
-    display: flex;
-    background: #fff;
-    padding: 10px 20px;
-    border: 0;
-    border-radius: 8px;
-    cursor: pointer;
-    color: #000;
-    gap: 5px;
-    font-size: 16px;
   }
 `

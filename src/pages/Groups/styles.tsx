@@ -1,21 +1,10 @@
 import styled from "styled-components";
 
-export const GroupsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  padding: 20px 0;
-  max-width: 1200px;
-  width: calc(100% - 40px);
-  min-height: 80vh;
-`
-
 export const GroupsEdit = styled.div`
   display: flex;
   flex-direction: column;
   padding: 40px 20px;
-  width: 100%;
+  width: calc(100% - 20px);
   max-width: 1000px;
   min-width: 300px;
 

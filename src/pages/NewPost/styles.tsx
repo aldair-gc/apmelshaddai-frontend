@@ -1,21 +1,11 @@
 import styled from "styled-components";
 
-export const NewPostContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  padding: 20px 0;
-  max-width: 1200px;
-  width: calc(100% - 40px);
-  min-height: 80vh;
-`
-
 export const PostCreate = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 20px;
   padding: 40px 20px;
-  width: 100%;
+  width: calc(100% - 20px);
   max-width: 1000px;
   min-width: 300px;
 

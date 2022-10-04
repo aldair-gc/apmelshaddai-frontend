@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Loading } from "../../components/Loading";
 import axios from "../../services/axios";
-import { Container, FilterMenu } from "../../styles/global";
+import { ButtonBar } from "../../styles/global";
 import { PostCreate } from "./styles";
 
 
@@ -94,41 +94,39 @@ export default function EditPost() {
     <main>
       <div className="bg-blues"></div>
 
-      <Container>
-        <FilterMenu>
-          <Link className="midbutton" to="/feed"><i className="fa-solid fa-arrow-left"></i>back</Link>
-          <Link className="midbutton" to="/groups"><i className="fa-solid fa-object-group"></i>groups</Link>
-        </FilterMenu>
+      <ButtonBar>
+        <Link className="midbutton" to="/feed"><i className="fa-solid fa-arrow-left"></i>back</Link>
+        <Link className="midbutton" to="/groups"><i className="fa-solid fa-object-group"></i>groups</Link>
+      </ButtonBar>
 
-        <PostCreate className="box">
-          <h2>Edit post</h2>
+      <PostCreate className="box">
+        <h2>Edit post</h2>
 
-          <form onSubmit={handleSubmit}>
-            Group:
-            <div className="radio-list">
+        <form onSubmit={handleSubmit}>
+          Group:
+          <div className="radio-list">
 
-              {groups.map((g: any) => (
-                <div key={g.id} className="radio-option">
-                  {post.group === g.id
-                    ? <input className="hidden" type="radio" name="group" id={g.group} value={g.id} defaultChecked />
-                    : <input className="hidden" type="radio" name="group" id={g.group} value={g.id} />
-                  }
-                  <label htmlFor={g.group}>{g.group}</label>
-                </div>
-              ))}
+            {groups.map((g: any) => (
+              <div key={g.id} className="radio-option">
+                {post.group === g.id
+                  ? <input className="hidden" type="radio" name="group" id={g.group} value={g.id} defaultChecked />
+                  : <input className="hidden" type="radio" name="group" id={g.group} value={g.id} />
+                }
+                <label htmlFor={g.group}>{g.group}</label>
+              </div>
+            ))}
 
-            </div>
+          </div>
 
-            <label htmlFor="title">Title:</label>
-            <input type="text" name="title" id="title" value={title} onChange={(e) => setTitle(e.target.value)} />
+          <label htmlFor="title">Title:</label>
+          <input type="text" name="title" id="title" value={title} onChange={(e) => setTitle(e.target.value)} />
 
-            <label htmlFor="text">Text:</label>
-            <textarea name="text" id="text" cols={30} rows={14} value={text} onChange={(e) => setText(e.target.value)}></textarea>
+          <label htmlFor="text">Text:</label>
+          <textarea name="text" id="text" cols={30} rows={14} value={text} onChange={(e) => setText(e.target.value)}></textarea>
 
-            <input type="submit" value="Save changes" />
-          </form>
-        </PostCreate>
-      </Container>
+          <input type="submit" value="Save changes" />
+        </form>
+      </PostCreate>
       {isLoading && <Loading />}
     </main>
   );

@@ -1,40 +1,19 @@
-import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { toast } from "react-toastify";
-import { ConfirmAtent, Filters, MediaControl, Post, PostContainer, PostContent, PostControl, PostMedia, PostsContainer, PostTexts, PostTitle } from "./styles";
-import { FilterMenu } from "../../styles/global";
+import { PostContainer } from "./styles";
+import { ButtonBar, Filters } from "../../styles/global";
 import axios from "../../services/axios";
-import { useAppSelector } from "../../app/hooks";
-import heic2any from "heic2any";
-import { Loading } from "../../components/Loading";
+import MakePost, { Post } from "./post";
+import { Link } from "react-router-dom";
 
 interface Group {
   group: string;
   id: number;
 }
 
-interface Post {
-  id: number;
-  group: string;
-  title: string;
-  text: string;
-  Media: [{
-    url: string;
-    filename: string;
-  }]
-  Links: [{
-    url: string;
-  }]
-}
-
 export default function Feed() {
-
-  const navigate = useNavigate();
-  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
   const [posts, setPosts] = useState<Post[]>([]);
   const [groups, setGroups] = useState<Group[]>([]);
   const [filter, setFilter] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     async function getData() {
@@ -52,306 +31,34 @@ export default function Feed() {
 
   const filteredPosts = filter != "0" ? posts.filter((post: any) => post.group == filter) : [];
 
-  async function uploadMedia(e: any, id: number) {
-    setIsLoading(true);
-    if (!e.target.files[0]) {
-      e.target.value = "";
-      toast.error("Error uploading picture");
-      setIsLoading(false);
-      return;
-    };
-
-    let file = e.target.files[0];
-
-    //if image type is heic, convert it to jpg
-    if (file.type === "image/heic") {
-      const converted: any = await heic2any({ blob: file, toType: "image/jpeg" });
-      file = new File([converted], `${file.name}.jpg`, { type: "image/jpeg", lastModified: new Date().getTime() });
-    }
-
-    //resize it to w=1200 h=auto
-    const url = URL.createObjectURL(file);
-    const img = document.querySelector(".img_temp") as HTMLImageElement;
-    img.src = url;
-
-    img.onload = async () => {
-      const { width, height } = img;
-      let newWidth = width;
-      let newHeith = height;
-      const maxWidth = 1200;
-      const maxHeight = 800;
-
-      if (width > maxWidth) {
-        newHeith = height * (maxWidth / width);
-        newWidth = maxWidth;
-      }
-
-      if (height > maxHeight) {
-        newWidth = width * (maxHeight / height);
-        newHeith = maxHeight;
-      }
-      const canvas = document.createElement("canvas");
-      canvas.width = newWidth;
-      canvas.height = newHeith;
-      const ctx = canvas.getContext("2d");
-      ctx?.drawImage(img, 0, 0, newWidth, newHeith);
-
-      canvas.toBlob(async (ev: any) => {
-        const newFile = new File([ev], `${file.name}.jpg`, { type: "image/jpeg", lastModified: new Date().getTime() });
-
-        const medUrl = URL.createObjectURL(newFile);
-        const formData = new FormData();
-        formData.append("post_id", id.toString());
-        formData.append("media", newFile);
-
-        try {
-          const edit = await axios.post("/media", formData, {
-            headers: { "Content-Type": "multipart/form-data" },
-          });
-          edit.data?.post_id === id.toString() ? toast.success("Picture uploaded successfully") : toast.error("Something went wrong");
-
-          const newPosts = [...posts];
-          newPosts.forEach((post: any) => {
-            if (post.id === id) post.Media = [{
-              "url": medUrl,
-              "filename": edit.data.filename,
-            }];
-          });
-          setPosts(newPosts);
-
-          (document.querySelector(".media-post-id-" + id) as HTMLElement).innerHTML = `
-          <img className="post-media" src=${medUrl}></img>
-          `;
-
-          (document.querySelector(".media-control-post-id-" + id) as HTMLElement).classList.add("hidden");
-          (document.querySelector(".control-media-post-id-" + id) as HTMLElement).classList.remove("hidden");
-          setIsLoading(false);
-        } catch (err: any) {
-          const errors = err.response?.data?.errors ?? [{ "error": "Unknown error" }];
-          errors.map((error: any) => toast.error(error));
-          setIsLoading(false);
-        }
-      }, "image/jpeg");
-    }
-    e.target.value = "";
-    setIsLoading(false);
-  }
-
-  async function uploadLink(e: any, id: number) {
-    const lnk = e.target.previousElementSibling.value;
-
-    if (!lnk) {
-      toast.error("Paste an YouTube URL firstly");
-      return;
-    };
-
-    try {
-      setIsLoading(true);
-      const edit = await axios.post("/link", { "url": lnk, "post_id": id.toString() });
-      edit.data?.post_id === id.toString() ? toast.success("Link uploaded successfully") : toast.error("Something went wrong");
-
-      const newPosts = [...posts];
-      newPosts.forEach((post: any) => {
-        if (post.id === id) post.Link = [{
-          "url": lnk,
-        }];
-      });
-      setPosts(newPosts);
-
-      (document.querySelector(".media-post-id-" + id) as HTMLElement).innerHTML = `
-        <iframe
-          src=${"https://www.youtube.com/embed/" + lnk.split("/")[3]} title="YouTube video player" frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen>
-        </iframe>
-      `;
-
-      (document.querySelector(".media-control-post-id-" + id) as HTMLElement).classList.add("hidden");
-      (document.querySelector(".control-link-post-id-" + id) as HTMLElement).classList.remove("hidden");
-      setIsLoading(false);
-    } catch (err: any) {
-      const errors = err.response?.data?.errors ?? [{ "error": "Unknown error" }];
-      errors.map((error: any) => toast.error(error));
-      setIsLoading(false);
-    };
-  }
-
-  async function deleteMedia(id: number) {
-    try {
-      setIsLoading(true);
-      const del = await axios.delete("/media/" + id);
-      del.data?.mediaDeleted === true ? toast.success("Media deleted from post") : toast.error("Something went wrong");
-
-      const newPosts = [...posts];
-      newPosts.forEach((post: any) => {
-        if (post.id === id) post.Media = [];
-      });
-      setPosts(newPosts);
-
-      (document.querySelector(".media-post-id-" + id) as HTMLElement).innerHTML = `
-        <img className="post-media" src="https://apmelshaddai-server.aldairgc.com/medias/1663702606334_14165.jpg"}></img>
-      `;
-      (document.querySelector(".media-control-post-id-" + id) as HTMLElement).classList.remove("hidden");
-      (document.querySelector(".control-media-post-id-" + id) as HTMLElement).classList.add("hidden");
-      setIsLoading(false);
-    } catch (err: any) {
-      const errors = err.response?.data?.errors ?? [{ "error": "Unknown error" }];
-      errors.map((error: any) => toast.error(error));
-      setIsLoading(false);
-    }
-  }
-
-  async function deleteLink(id: number) {
-    try {
-      setIsLoading(true);
-      const del = await axios.delete("/link/" + id);
-      del.data?.mediaDeleted === true ? toast.success("Link deleted from post") : toast.error("Something went wrong");
-
-      const newPosts = [...posts];
-      newPosts.forEach((post: any) => {
-        if (post.id === id) post.Link = [];
-      });
-      setPosts(newPosts);
-
-      (document.querySelector(".media-post-id-" + id) as HTMLElement).innerHTML = `
-        <img className="post-media" src="https://apmelshaddai-server.aldairgc.com/medias/1663702606334_14165.jpg"}></img>
-      `;
-      (document.querySelector(".media-control-post-id-" + id) as HTMLElement).classList.remove("hidden");
-      (document.querySelector(".control-link-post-id-" + id) as HTMLElement).classList.add("hidden");
-      setIsLoading(false);
-    } catch (err: any) {
-      const errors = err.response?.data?.errors ?? [{ "error": "Unknown error" }];
-      errors.map((error: any) => toast.error(error));
-      setIsLoading(false);
-    };
-  }
-
-  async function deletePost(id: number) {
-    try {
-      setIsLoading(true);
-      const del = await axios.delete("/post/" + id);
-      del.data?.postDeleted === true ? toast.success("Post deleted successfully") : toast.error("Something went wrong");
-
-      const newPosts = posts.filter((post: any) => (post.id !== id));
-      setPosts(newPosts);
-      setIsLoading(false);
-    } catch (err: any) {
-      const errors = err.response?.data?.errors ?? [{ "error": "Unknown error" }];
-      errors.map((error: any) => toast.error(error));
-      setIsLoading(false);
-    }
-  }
 
   return (
     <main>
-      {isLoading && <Loading />}
       <div className="bg-blues"></div>
-      <PostsContainer>
-        <FilterMenu>
-          <Filters>
-            <li key="0" id="filter" className={filter}>
-              <label htmlFor="0" className="groupname smallbutton">all
-                <input type="radio" name="filter" id="0" value="all" className="all hidden" onClick={filterSelect} defaultChecked />
-              </label>
-            </li>
-            {groups.map((g: any) => (
-              <li key={g.id}>
-                <label htmlFor={g.id} className="groupname smallbutton">{g.group}
-                  <input type="radio" name="filter" id={g.id} value={"group" + g.id} className="hidden" onClick={filterSelect} />
-                </label>
-              </li>
-            ))}
-          </Filters>
-        </FilterMenu>
-        <PostContainer>
 
-          {(filteredPosts.length > 0 ? filteredPosts : posts).map((post: any) => (
-            <Post key={post.id} className={"group" + post.group}>
-
-              <PostMedia onMouseLeave={() => {
-                const md = (document.querySelectorAll(".mediacontrol"));
-                md.forEach((control: any) => control.style.visibility = "visible");
-              }}>
-                <div className={"med-div media-post-id-" + post.id}>
-                  {post.Links[0]?.url
-                    ?
-                    <iframe
-                      src={"https://www.youtube.com/embed/" + post.Links[0].url.split("/")[3]} title="YouTube video player" frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen>
-                    </iframe>
-                    :
-                    <img className="post-media" src={post.Media[0]?.url ?? "https://apmelshaddai-server.aldairgc.com/medias/1663702606334_14165.jpg"}></img>
-                  }
-                </div>
-                {isLoggedIn ?
-                  <MediaControl className={"mediacontrol mediacontrol-post-id" + post.id}>
-
-                    <a className={"control-close-btn control-close-post-id-" + post.id} onClick={() => {
-                      const md = document.querySelectorAll(".mediacontrol");
-                      md.forEach((control: any) => {
-                        control.style.visibility = "hidden"
-                      });
-                    }}>
-                      <i className="fa-solid fa-circle-xmark"></i>
-                    </a>
-
-                    <form className={((post.Links[0]?.url || post.Media[0]?.url) ? "hidden " : "") + "media-control-post-id-" + post.id}>
-                      <label htmlFor={"media-post-id-" + post.id} className="media-control-button">
-                        <i className="fa-solid fa-upload"></i>upload picture
-                      </label>
-                      <input type="file" name="media" id={"media-post-id-" + post.id} onInput={(e) => uploadMedia(e, post.id)} className="hidden" />
-
-                      <div className="upload-link media-control-button">
-                        <input type="text" name="link" id={"link-post-id-" + post.id} placeholder="paste youtube link here" />
-                        <label htmlFor={"link-post-id-" + post.id} className="" onClick={(e) => uploadLink(e, post.id)}>
-                          <i className="fa-solid fa-upload"></i>upload youtube
-                        </label>
-                      </div>
-                    </form>
-
-                    <a className={(post.Links[0]?.url ? "" : "hidden ") + "media-control-button font-red control-link-post-id-" + post.id} onClick={() => deleteLink(post.id)}>
-                      <i className="fa-solid fa-eraser"></i>delete link
-                    </a>
-
-                    <a className={(post.Media[0]?.url ? "" : "hidden ") + "media-control-button font-red control-media-post-id-" + post.id} onClick={() => deleteMedia(post.id)}>
-                      <i className="fa-solid fa-eraser"></i>delete picture
-                    </a>
-
-                  </MediaControl>
-                  : ""
-                }
-              </PostMedia>
-
-              <PostTexts>
-                <PostTitle>{post.title}</PostTitle>
-                <PostContent>{post.text}</PostContent>
-              </PostTexts>
-
-              {isLoggedIn ?
-                <PostControl>
-                  <a className="button" onClick={() => navigate("/editpost/" + post.id)}>
-                    <i className="fa-solid fa-pen-to-square"></i>edit
-                  </a>
-                  <a className="button font-red"
-                    onClick={() => (document.querySelector("#confirm-atent-id-" + post.id) as HTMLDivElement).style.display = "flex"}>
-                    <i className="fa-solid fa-eraser"></i>delete
-                  </a>
-                </PostControl>
-                : ""}
-
-              <ConfirmAtent id={"confirm-atent-id-" + post.id}>
-                Confirm deletion?
-                <div className="options">
-                  <button className="font-red" onClick={() => deletePost(post.id)}>Confirm</button>
-                  <button onClick={() => (document.querySelector("#confirm-atent-id-" + post.id) as HTMLDivElement).style.display = "none"}>Cancel</button>
-                </div>
-              </ConfirmAtent>
-            </Post>
+      <ButtonBar>
+        <Filters>
+          <i className="fa-solid fa-filter"></i>
+          <label htmlFor="0" className="groupname smallbutton">all
+            <input type="radio" name="filter" id="0" value="all" className="all hidden" onClick={filterSelect} defaultChecked />
+          </label>
+          {groups.map((g: any) => (
+            <label key={g.id} htmlFor={g.id} className="groupname smallbutton">{g.group}
+              <input type="radio" name="filter" id={g.id} value={"group" + g.id} className="hidden" onClick={filterSelect} />
+            </label>
           ))}
+        </Filters>
+        <Link to="/newpost" className="midbutton"><i className="fa-solid fa-square-plus"></i>New post</Link>
+      </ButtonBar>
 
-        </PostContainer>
-      </PostsContainer>
+      <PostContainer>
+
+        {(filteredPosts.length > 0 ? filteredPosts : posts).map((post: Post) => (
+          <MakePost key={post.id} {...post} />
+        ))}
+
+      </PostContainer>
       <img alt="none" className="img_temp hidden" />
-    </main >
-
+    </main>
   );
 };

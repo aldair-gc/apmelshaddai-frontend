@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Loading } from "../../components/Loading";
 import axios from "../../services/axios";
-import { Container, FilterMenu } from "../../styles/global";
+import { ButtonBar, Container, Filters } from "../../styles/global";
 import { PostCreate } from "./style";
 
 
@@ -45,33 +45,31 @@ export const Prayer = () => {
     <main>
       <div className="bg-blues"></div>
 
-      <Container>
-        <FilterMenu>
-          <Link className="midbutton" to="/"><i className="fa-solid fa-arrow-left"></i>back</Link>
-        </FilterMenu>
+      <ButtonBar>
+        <Link className="midbutton" to="/"><i className="fa-solid fa-arrow-left"></i>back</Link>
+      </ButtonBar>
 
-        <PostCreate className="box">
-          <h2>Prayer request</h2>
+      <PostCreate className="box">
+        <h2>Prayer request</h2>
 
-          <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
 
-            <label htmlFor="name">Name:</label>
-            <input type="text" name="name" id="name" placeholder="Enter your name" />
+          <label htmlFor="name">Name:</label>
+          <input type="text" name="name" id="name" placeholder="Enter your name" />
 
-            <label htmlFor="email">Email:</label>
-            <input type="email" name="email" id="email" placeholder="Enter your email" />
+          <label htmlFor="email">Email:</label>
+          <input type="email" name="email" id="email" placeholder="Enter your email" />
 
-            <label htmlFor="tel">Tel:</label>
-            <input type="tel" name="tel" id="tel" placeholder="Enter your phone number" />
+          <label htmlFor="tel">Tel:</label>
+          <input type="tel" name="tel" id="tel" placeholder="Enter your phone number" />
 
-            <label htmlFor="message">Message:</label>
-            <textarea name="message" id="message" cols={30} rows={10} placeholder="Write your message here" autoCorrect="on"></textarea>
+          <label htmlFor="message">Message:</label>
+          <textarea name="message" id="message" cols={30} rows={10} placeholder="Write your message here" autoCorrect="on"></textarea>
 
-            <input type="submit" value="Send" />
-          </form>
-        </PostCreate>
+          <input type="submit" value="Send" />
+        </form>
+      </PostCreate>
 
-      </Container>
       {isLoading && <Loading />}
     </main>
   );

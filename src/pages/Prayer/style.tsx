@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const PostCreate = styled.div` display: flex;
 flex-direction: column;
 padding: 40px 20px;
-width: 100%;
+width: calc(100% - 20px);
 max-width: 1000px;
 min-width: 300px;
 

@@ -3,8 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Loading } from "../../components/Loading";
 import axios from "../../services/axios";
-import { Container, FilterMenu } from "../../styles/global";
-import { NewPostContainer, PostCreate } from "./styles";
+import { ButtonBar } from "../../styles/global";
+import { PostCreate } from "./styles";
 
 export default function NewPost() {
   const navigate = useNavigate();
@@ -75,38 +75,35 @@ export default function NewPost() {
     <main>
       <div className="bg-blues"></div>
 
-      <NewPostContainer>
-        <FilterMenu>
-          <Link className="midbutton" to="/feed"><i className="fa-solid fa-arrow-left"></i>back</Link>
-          <Link className="midbutton" to="/groups"><i className="fa-solid fa-object-group"></i>groups</Link>
-        </FilterMenu>
+      <ButtonBar>
+        <Link className="midbutton" to="/feed"><i className="fa-solid fa-arrow-left"></i>back</Link>
+        <Link className="midbutton" to="/groups"><i className="fa-solid fa-object-group"></i>groups</Link>
+      </ButtonBar>
+      <PostCreate className="box">
+        <h2>Create new post</h2>
 
-        <PostCreate className="box">
-          <h2>Create new post</h2>
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="group">Group:</label>
+          <div className="radio-list">
 
-          <form onSubmit={handleSubmit}>
-            <label htmlFor="group">Group:</label>
-            <div className="radio-list">
+            {groups.map((g: any) => (
+              <div key={g.id} className="radio-option">
+                <input className="hidden" type="radio" name="group" id={g.group} value={g.id} />
+                <label htmlFor={g.group}>{g.group}</label>
+              </div>
+            ))}
 
-              {groups.map((g: any) => (
-                <div className="radio-option">
-                  <input className="hidden" type="radio" name="group" id={g.group} value={g.id} />
-                  <label htmlFor={g.group}>{g.group}</label>
-                </div>
-              ))}
+          </div>
 
-            </div>
+          <label htmlFor="title">Title:</label>
+          <input type="text" name="title" id="title" />
 
-            <label htmlFor="title">Title:</label>
-            <input type="text" name="title" id="title" />
+          <label htmlFor="text">Text:</label>
+          <textarea name="text" id="text" cols={30} rows={14}></textarea>
 
-            <label htmlFor="text">Text:</label>
-            <textarea name="text" id="text" cols={30} rows={14}></textarea>
-
-            <input type="submit" value="Create" />
-          </form>
-        </PostCreate>
-      </NewPostContainer>
+          <input type="submit" value="Create" />
+        </form>
+      </PostCreate>
       {isLoading && <Loading />}
     </main>
   );

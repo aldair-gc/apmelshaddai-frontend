@@ -22,6 +22,7 @@ export default createGlobalStyle`
     align-items: center;
     flex-grow: 2;
     gap: 20px;
+    padding: 20px 0;
   }
 
   input,
@@ -34,41 +35,41 @@ export default createGlobalStyle`
   }
 
   .minibutton {
-    display: flex;
     border: 0;
-    cursor: pointer;
-    color: #000;
     font-size: 20px;
     border-radius: 50%;
-    gap: 5px;
-    background: #fff;
     height: min-content;
     width: min-content;
-    text-decoration: none;
   }
 
   .smallbutton {
-    display: flex;
-    align-items: center;
-    background: #fff;
-    padding: 7px 15px;
+    padding: 5px 10px;
     border: 1px solid #027db6;
-    border-radius: 8px;
-    cursor: pointer;
-    color: #000;
-    gap: 5px;
+    border-radius: 5px;
   }
 
   .midbutton {
+    padding: 10px 15px;
+    border: 1px solid #027db6;
+    border-radius: 5px;
+  }
+
+  .minibutton, .smallbutton, .midbutton {
     display: flex;
     align-items: center;
     background: #fff;
-    padding: 10px 20px;
-    border: 1px solid #027db6;
-    border-radius: 8px;
-    cursor: pointer;
     color: #000;
+    text-decoration: none;
     gap: 5px;
+    cursor: pointer;
+
+    :hover {
+      background: #ddd;
+    }
+
+    :active {
+      background: #ccc;
+    }
   }
 
   .no-link {
@@ -86,7 +87,7 @@ export default createGlobalStyle`
     background: #fff;
     padding: 5px;
     border: 1px solid #027db6;
-    border-radius: 8px;
+    border-radius: 5px;
   }
 
   .radio-option:has(input:checked) {
@@ -99,12 +100,12 @@ export default createGlobalStyle`
 
   .box {
     background: rgba(255, 255, 255, 0.5);
-    box-shadow: 0 0 5px #555;
-    border-radius: 15px;
+    box-shadow: 0 0 5px #000;
+    border-radius: 10px;
   }
 
   .shadowed {
-    box-shadow: 0 0 5px #555;
+    box-shadow: 0 0 5px #000;
   }
 
   .marg20px {
@@ -236,25 +237,39 @@ export default createGlobalStyle`
     }
   }
 
-
   /* RESPONSIVENESS - END */
 `
 
-export const FilterMenu = styled.div`
+export const ButtonBar = styled.div`
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   justify-content: space-between;
+  gap: 5px;
+  max-width: 1000px;
   width: 100%;
+`
+
+export const Filters = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 2px #000;
+  border-radius: 5px;
+  padding: 5px;
 
   li {
     list-style: none;
   }
 
-  a {
-    text-decoration: none;
-    color: #000;
-    cursor: pointer;
-    gap: 5px;
+  i {
+    font-size: 20px;
+    padding: 0 5px;
+    text-shadow: 0 0 2px #000;
   }
 `
 
@@ -263,7 +278,6 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 20px;
-  overflow: hidden;
   padding: 20px 0;
   max-width: 1200px;
   width: calc(100% - 40px);
@@ -275,7 +289,7 @@ export const ButtonMid = styled.button`
   background: #fff;
   padding: 10px 20px;
   border: 1px solid #027db6;
-  border-radius: 8px;
+  border-radius: 5px;
   cursor: pointer;
   color: #000;
   gap: 5px;
@@ -284,8 +298,8 @@ export const ButtonMid = styled.button`
 export const SmallBox = styled.div`
   width: 500px;
   background: rgba(255, 255, 255, 0.5);
-  box-shadow: 0 0 5px #555;
-  border-radius: 15px;
+  box-shadow: 0 0 5px #000;
+  border-radius: 10px;
   padding: 20px;
 
   form {
@@ -296,7 +310,7 @@ export const SmallBox = styled.div`
 
   input {
     border: 1px solid #027db6;
-    border-radius: 8px;
+    border-radius: 5px;
     padding: 5px;
     font-size: 16px;
   }
@@ -314,7 +328,7 @@ export const SmallBox = styled.div`
     width: 200px;
     padding: 5px 15px;
     border: 1px solid #027db6;
-    border-radius: 8px;
+    border-radius: 5px;
     cursor: pointer;
     gap: 5px;
 
