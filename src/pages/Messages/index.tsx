@@ -9,10 +9,8 @@ export const Messages = () => {
 
   useEffect(() => {
     async function getData() {
-      setIsLoading(true);
       const dataMessages = await axios.get("/prayer");
       setMessages(dataMessages.data);
-      setIsLoading(false);
     }
     getData();
   }, []);

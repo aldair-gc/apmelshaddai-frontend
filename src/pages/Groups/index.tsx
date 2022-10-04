@@ -11,10 +11,8 @@ export const Groups = () => {
 
   useEffect(() => {
     async function getData() {
-      setIsLoading(true);
       const dataGroups = await axios.get('/group');
       setGroups(dataGroups.data);
-      setIsLoading(false);
     }
     getData();
   }, []);

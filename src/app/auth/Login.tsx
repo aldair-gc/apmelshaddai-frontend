@@ -45,9 +45,10 @@ export function AuthLogin() {
         toast.success(`Welcome ` + response.data.user.name);
       } else {
         dispatch(authFailure());
-        toast.error("Something went wrong...")
+        toast.error("Login failure")
       }
     } catch (err: any) {
+      dispatch(authFailure());
       const errors = err.response?.data?.errors ?? [{ "error": "Unknown error" }];
       errors.map((error: any) => toast.error(error));
     }

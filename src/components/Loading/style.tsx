@@ -13,7 +13,7 @@ justify-content: center;
 z-index: 5;
 
 i {
-  font-size: 30px;
+  font-size: 40px;
   color: #fff;
   animation: 1s infinite normal spin;
   animation-timing-function: linear;

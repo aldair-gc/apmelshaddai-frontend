@@ -34,16 +34,14 @@ export default function Feed() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [groups, setGroups] = useState<Group[]>([]);
   const [filter, setFilter] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     async function getData() {
-      setIsLoading(true);
       const dataGroups = await axios.get('/group');
       setGroups(dataGroups.data);
       const dataPosts = await axios.get('/post');
       setPosts(dataPosts.data);
-      setIsLoading(false);
     }
     getData();
   }, []);
@@ -58,8 +56,8 @@ export default function Feed() {
     setIsLoading(true);
     if (!e.target.files[0]) {
       e.target.value = "";
-      setIsLoading(false);
       toast.error("Error uploading picture");
+      setIsLoading(false);
       return;
     };
 
@@ -107,7 +105,6 @@ export default function Feed() {
         formData.append("media", newFile);
 
         try {
-          setIsLoading(true);
           const edit = await axios.post("/media", formData, {
             headers: { "Content-Type": "multipart/form-data" },
           });
@@ -137,15 +134,14 @@ export default function Feed() {
       }, "image/jpeg");
     }
     e.target.value = "";
+    setIsLoading(false);
   }
 
   async function uploadLink(e: any, id: number) {
     const lnk = e.target.previousElementSibling.value;
 
     if (!lnk) {
-      setIsLoading(false);
       toast.error("Paste an YouTube URL firstly");
-      setIsLoading(true);
       return;
     };
 

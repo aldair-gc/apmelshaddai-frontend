@@ -30,20 +30,17 @@ export default function EditPost() {
 
   useEffect(() => {
     async function getData() {
-      setIsLoading(true);
       const dataGroups = await axios.get('/group');
       setGroups(dataGroups.data);
       const dataPost = await axios.get("/post/" + id);
       setPost(dataPost.data);
       setTitle(dataPost.data.title);
       setText(dataPost.data.text);
-      setIsLoading(false);
     }
     getData();
   }, []);
 
   async function handleSubmit(e: any) {
-    setIsLoading(true);
     e.preventDefault();
     let errors = false;
     const inputs = document.querySelectorAll("input[name=group]");
@@ -72,6 +69,7 @@ export default function EditPost() {
 
     if (!errors) {
       try {
+        setIsLoading(true);
         const response = await axios.put("/post/" + id, { group, title, text });
         if (response.status === 200) {
           toast.success("Post edited");
@@ -131,7 +129,7 @@ export default function EditPost() {
           </form>
         </PostCreate>
       </Container>
-      <Loading />
+      {isLoading && <Loading />}
     </main>
   );
 };
