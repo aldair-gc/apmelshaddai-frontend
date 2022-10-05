@@ -22,7 +22,7 @@ export default createGlobalStyle`
     align-items: center;
     flex-grow: 2;
     gap: 20px;
-    padding: 20px 0;
+    padding-bottom: 20px;
   }
 
   input,
@@ -248,6 +248,7 @@ export const ButtonBar = styled.div`
   gap: 5px;
   max-width: 1000px;
   width: 100%;
+  padding: 20px 20px 0 20px;
 `
 
 export const Filters = styled.div`

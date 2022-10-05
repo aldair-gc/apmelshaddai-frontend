@@ -87,7 +87,7 @@ export default function Feed() {
             </label>
           ))}
         </Filters>
-        <Link to="/newpost" className="midbutton"><i className="fa-solid fa-square-plus"></i>New post</Link>
+        {isLoggedIn && <Link to="/newpost" className="midbutton"><i className="fa-solid fa-square-plus"></i>New post</Link>}
       </ButtonBar>
 
       <PostContainer>

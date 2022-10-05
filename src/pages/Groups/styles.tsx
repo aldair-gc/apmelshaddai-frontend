@@ -5,7 +5,7 @@ export const GroupsEdit = styled.div`
   flex-direction: column;
   padding: 40px 20px;
   width: calc(100% - 20px);
-  max-width: 1000px;
+  max-width: 600px;
   min-width: 300px;
 
   h2 {
@@ -29,7 +29,6 @@ export const GroupsEdit = styled.div`
     border-radius: 8px;
     padding: 5px;
     width: 100%;
-    max-width: 400px;
     font-size: 16px;
   }
 

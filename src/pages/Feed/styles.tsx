@@ -20,6 +20,7 @@ position: relative;
   max-width: 1000px;
   min-width: 200px;
   overflow: hidden;
+  width: 100%;
 `
 
 export const PostMedia = styled.div`
