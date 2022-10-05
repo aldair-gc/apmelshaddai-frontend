@@ -35,7 +35,6 @@ export default createGlobalStyle`
   }
 
   .minibutton {
-    border: 0;
     font-size: 20px;
     border-radius: 50%;
     height: min-content;
@@ -44,13 +43,11 @@ export default createGlobalStyle`
 
   .smallbutton {
     padding: 5px 10px;
-    border: 1px solid #027db6;
     border-radius: 5px;
   }
 
   .midbutton {
     padding: 10px 15px;
-    border: 1px solid #027db6;
     border-radius: 5px;
   }
 
@@ -61,6 +58,7 @@ export default createGlobalStyle`
     color: #000;
     text-decoration: none;
     gap: 5px;
+    border: 0;
     cursor: pointer;
 
     :hover {
@@ -69,6 +67,11 @@ export default createGlobalStyle`
 
     :active {
       background: #ccc;
+    }
+
+    :has(:checked) {
+      background: #027db6;
+      color: #fff;
     }
   }
 

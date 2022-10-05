@@ -14,6 +14,7 @@ import { Groups } from '../pages/Groups'
 import NewPost from '../pages/NewPost'
 import { Messages } from '../pages/Messages'
 import EditPost from '../pages/EditPost';
+import Test from '../pages/Test';
 
 
 export default function Routers() {
@@ -33,6 +34,7 @@ export default function Routers() {
         <Route path="messages" element={<Messages />}></Route>
       </Route>
       <Route path="*" element={<NotFound />}></Route>
+      <Route path="/test" element={<Test />}></Route>
     </Routes>
   );
 }
