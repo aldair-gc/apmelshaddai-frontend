@@ -7,11 +7,7 @@
   height: 70vh;
   width: 100%;
   overflow: hidden;
-  background-image: url("../../assets/images/zac-durant-_6HzPU9Hyfg-unsplash.jpg");
-  background-position: center;
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-  background-size: cover;
+  background: url("../../assets/images/zac-durant-_6HzPU9Hyfg-unsplash.jpg") center / cover no-repeat fixed border-box;
 }
 
 .intro img {
@@ -115,7 +111,7 @@
 }
 
 #church {
-  background: url(../../assets/images/church_small.jpg) center;
+  background: url(../../assets/images/church-jpg-web-small.jpeg) center;
   background-size: cover;
 }
 
@@ -480,14 +476,14 @@
 
 .carousel_slide:nth-of-type(2),
 .carousel_indicators .carousel_indicator:nth-of-type(2) {
-  background-image: url("../../assets/images/church-googlemaps.jpg");
+  background-image: url("../../assets/images/church-jpg-web-wide.jpeg");
   background-size: cover;
   background-position: center;
 }
 
 .carousel_slide:nth-of-type(3),
 .carousel_indicators .carousel_indicator:nth-of-type(3) {
-  background-image: url("../../assets/images/church_inside.jpg");
+  background-image: url("../../assets/images/church_inside-jpg-web-wide.jpg");
   background-size: cover;
   background-position: center;
 }

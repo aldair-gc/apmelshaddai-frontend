@@ -75,10 +75,6 @@ export default createGlobalStyle`
     }
   }
 
-  .no-link {
-    cursor: default;
-  }
-
   .radio-list {
     display: flex;
     flex-wrap: wrap;

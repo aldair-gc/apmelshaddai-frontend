@@ -15,6 +15,7 @@ import NewPost from '../pages/NewPost'
 import { Messages } from '../pages/Messages'
 import EditPost from '../pages/EditPost';
 import Test from '../pages/Test';
+import Missions from '../pages/Missions';
 
 
 export default function Routers() {
@@ -26,6 +27,7 @@ export default function Routers() {
       <Route path="/prayer" element={<Prayer />}></Route>
       <Route path="/register" element={<Register />}></Route>
       <Route path="/login" element={<Login />}></Route>
+      <Route path='/missions' element={<Missions />}></Route>
       <Route path="/" element={<Private />}>
         <Route path="management" element={<Management />}></Route>
         <Route path="newpost" element={<NewPost />}></Route>

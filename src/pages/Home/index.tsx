@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import "./style.css";
-import logo from "../../assets/images/logo-bg-png.png";
+import logo from "../../assets/images/logo-png-web.png";
 import { useLayoutEffect } from "react";
 
 const carousels = document.getElementsByClassName("carousel_activator") as HTMLCollectionOf<HTMLInputElement>;
