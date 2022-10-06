@@ -149,7 +149,7 @@ export default createGlobalStyle`
   }
 
 
-  @media (max-width: 700px) {
+  @media (max-width: 768px) {
     /* #logo {
           font-size: 14px;
       } */
@@ -206,7 +206,7 @@ export default createGlobalStyle`
 
   /* RESPONSIVENESS - BIG */
 
-  @media (min-width: 700px) {
+  @media (min-width: 768px) {
     #menuicon {
       display: none;
     }
@@ -219,7 +219,7 @@ export default createGlobalStyle`
 
   /* RESPONSIVENESS - SMALL HEIGHT */
 
-  @media (max-height: 700px) {
+  @media (max-height: 768px) {
 
     #home-options a {
       width: 120px;
