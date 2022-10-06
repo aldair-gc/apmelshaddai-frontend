@@ -76,20 +76,26 @@ export const PostContent = styled.div`
 `
 
 export const OuterBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 20px;
+
   > div {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
     width: 100%;
-    padding: 40px;
+    max-width: 1200px;
   }
 
-  .bg-darkblue { background-color: #027db6; color: #fff }
+  :has(.bg-darkblue) { background-color: #027db6; color: #fff }
 
-  .bg-lightblue { background-color: #a3d0e5 }
+  :has(.bg-lightblue) { background-color: #a3d0e5 }
 
-  .bg-white { background-color: #fff }
+  :has(.bg-white) { background-color: #fff }
 
   .column { flex-direction: column }
 
@@ -100,13 +106,13 @@ export const OuterBlock = styled.div`
     align-items: center;
     justify-content: center;
     max-width: 50%;
-    min-width: 600px;
+    min-width: 400px;
   }
 
   h1,
   i {
     max-width: 80%;
-    padding: 30px;
+    padding: 30px 0;
     text-align: center;
     font-family: 'Montserrat', sans-serif;
   }
@@ -123,6 +129,7 @@ export const OuterBlock = styled.div`
   p {
     font-size: large;
     padding: 30px;
+    text-align: center;
   }
 
   hr {
