@@ -40,7 +40,6 @@ export const Home = () => {
           <div className="block-flex-wrap">
             <div className="square">
               <div className="inner-square" id="church">
-                <div className="square-image"></div>
               </div>
             </div>
 
@@ -77,121 +76,110 @@ export const Home = () => {
             </div>
             <div className="square">
               <div className="inner-square" id="our-family">
-                <div className="square-image"></div>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="block-bg-white">
-        <div className="carousel block-bg-white">
-
-          <ul className="carousel">
-            <input className="carousel_activator" type="radio" id="A" name="activator" defaultChecked={true} />
-            <input className="carousel_activator" type="radio" id="B" name="activator" />
-            <input className="carousel_activator" type="radio" id="C" name="activator" />
-            <input className="carousel_activator" type="radio" id="D" name="activator" />
-            <div className="carousel_controls">
-              <label className="carousel_control carousel_control_backward" htmlFor="D"></label>
-              <label className="carousel_control carousel_control_forward" htmlFor="B"></label>
-            </div>
-            <div className="carousel_controls">
-              <label className="carousel_control carousel_control_backward" htmlFor="A"></label>
-              <label className="carousel_control carousel_control_forward" htmlFor="C"></label>
-            </div>
-            <div className="carousel_controls">
-              <label className="carousel_control carousel_control_backward" htmlFor="B"></label>
-              <label className="carousel_control carousel_control_forward" htmlFor="D"></label>
-            </div>
-            <div className="carousel_controls">
-              <label className="carousel_control carousel_control_backward" htmlFor="C"></label>
-              <label className="carousel_control carousel_control_forward" htmlFor="A"></label>
-            </div>
-            <li className="carousel_slide">
-              <h1></h1>
-            </li>
-            <li className="carousel_slide">
-              <h1></h1>
-            </li>
-            <li className="carousel_slide">
-              <h1></h1>
-            </li>
-            <li className="carousel_slide">
-              <h1></h1>
-            </li>
-            <div className="carousel_indicators">
-              <label className="carousel_indicator" htmlFor="A"></label>
-              <label className="carousel_indicator" htmlFor="B"></label>
-              <label className="carousel_indicator" htmlFor="C"></label>
-              <label className="carousel_indicator" htmlFor="D"></label>
-            </div>
-          </ul>
-
-        </div>
+      <div className="block">
+        <ul className="carousel">
+          <input className="carousel_activator" type="radio" id="A" name="activator" defaultChecked={true} />
+          <input className="carousel_activator" type="radio" id="B" name="activator" />
+          <input className="carousel_activator" type="radio" id="C" name="activator" />
+          <input className="carousel_activator" type="radio" id="D" name="activator" />
+          <div className="carousel_controls">
+            <label className="carousel_control carousel_control_backward" htmlFor="D"></label>
+            <label className="carousel_control carousel_control_forward" htmlFor="B"></label>
+          </div>
+          <div className="carousel_controls">
+            <label className="carousel_control carousel_control_backward" htmlFor="A"></label>
+            <label className="carousel_control carousel_control_forward" htmlFor="C"></label>
+          </div>
+          <div className="carousel_controls">
+            <label className="carousel_control carousel_control_backward" htmlFor="B"></label>
+            <label className="carousel_control carousel_control_forward" htmlFor="D"></label>
+          </div>
+          <div className="carousel_controls">
+            <label className="carousel_control carousel_control_backward" htmlFor="C"></label>
+            <label className="carousel_control carousel_control_forward" htmlFor="A"></label>
+          </div>
+          <li className="carousel_slide">
+            <h1></h1>
+          </li>
+          <li className="carousel_slide">
+            <h1></h1>
+          </li>
+          <li className="carousel_slide">
+            <h1></h1>
+          </li>
+          <li className="carousel_slide">
+            <h1></h1>
+          </li>
+          <div className="carousel_indicators">
+            <label className="carousel_indicator" htmlFor="A"></label>
+            <label className="carousel_indicator" htmlFor="B"></label>
+            <label className="carousel_indicator" htmlFor="C"></label>
+            <label className="carousel_indicator" htmlFor="D"></label>
+          </div>
+        </ul>
       </div>
 
       <div className="square-container">
-        <div className="square">
+        <div className="square box">
           <div className="inner-square" id="feed">
-            <div className="square-image"></div>
             <div className="square-text">
-              <h3></h3>
+              <h3>All updates, news, photos, videos...</h3>
               <Link to="/feed">
                 <h2>Feed</h2>
               </Link>
             </div>
           </div>
         </div>
-        <div className="square">
+        <div className="square box">
           <div className="inner-square" id="prayers">
-            <div className="square-image"></div>
             <div className="square-text">
-              <h3></h3>
+              <h3>Would you like us to pray for you? Send your request.</h3>
               <Link to="/prayer">
                 <h2>Prayers</h2>
               </Link>
             </div>
           </div>
         </div>
-        <div className="square">
+        <div className="square box">
           <div className="inner-square" id="missions">
-            <div className="square-image"></div>
             <div className="square-text">
-              <h3></h3>
+              <h3>Updates on all our missions</h3>
               <Link to="/missions">
                 <h2>Missions</h2>
               </Link>
             </div>
           </div>
         </div>
-        <div className="square">
+        <div className="square box">
           <div className="inner-square" id="agenda">
-            <div className="square-image"></div>
             <div className="square-text">
-              <h3></h3>
+              <h3>Check our worships, meetings, lives...</h3>
               <Link to="/agenda">
                 <h2>Agenda</h2>
               </Link>
             </div>
           </div>
         </div>
-        <div className="square">
+        <div className="square box">
           <div className="inner-square" id="pictures">
-            <div className="square-image"></div>
             <div className="square-text">
-              <h3></h3>
+              <h3>Our memories</h3>
               <Link to="/pictures">
                 <h2>Pictures</h2>
               </Link>
             </div>
           </div>
         </div>
-        <div className="square">
+        <div className="square box">
           <div className="inner-square" id="videos">
-            <div className="square-image"></div>
             <div className="square-text">
-              <h3></h3>
+              <h3>Our history</h3>
               <Link to="/videos">
                 <h2>Videos</h2>
               </Link>

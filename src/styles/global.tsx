@@ -21,7 +21,6 @@ export default createGlobalStyle`
     flex-direction: column;
     align-items: center;
     flex-grow: 2;
-    gap: 20px;
     padding-bottom: 20px;
   }
 
@@ -244,7 +243,7 @@ export const ButtonBar = styled.div`
   gap: 5px;
   max-width: 1000px;
   width: 100%;
-  padding: 20px 20px 0 20px;
+  padding: 20px;
 `
 
 export const Filters = styled.div`

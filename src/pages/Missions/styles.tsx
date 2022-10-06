@@ -7,11 +7,11 @@ export const PostContainer = styled.div`
   align-items: center;
   gap: 20px;
   width: 100%;
-  padding-bottom: 20px;
+  padding: 20px 0;
   `
 
 export const Post = styled.div`
-position: relative;
+  position: relative;
   display: flex;
   flex-direction: column;
   min-height: 150px;
@@ -66,109 +66,66 @@ export const PostTexts = styled.div`
 export const PostTitle = styled.div`
   font-size: 22px;
   margin-bottom: 10px;
+  padding: 10px 0;
 `
 
 export const PostContent = styled.div`
   font-size: 16px;
+  text-indent: 50px;
+  text-align: justify;
 `
 
-export const PostControl = styled.div`
-  display: flex;
-  width: 100%;
-  gap: 10px;
-  justify-content: center;
-  flex: 0 0 auto;
-  padding-bottom: 20px;
-
-  a {
-    text-decoration: none;
-  }
-
-  .button {
+export const OuterBlock = styled.div`
+  > div {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    background: #fff;
-    padding: 10px 20px;
-    border: 1px solid #888;
-    border-radius: 5px;
-    cursor: pointer;
-    color: #000;
-    gap: 5px;
-    font-size: 16px;
+    justify-content: center;
+    width: 100%;
+    padding: 40px;
   }
 
-  .button:hover {
-    background: #a3d0e5;
-  }
+  .bg-darkblue { background-color: #027db6; color: #fff }
 
-  .button:active {
-    background: #027db6;
-  }
-`
+  .bg-lightblue { background-color: #a3d0e5 }
 
-export const MediaControl = styled.div`
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  gap: 10px;
-  transition: all .3s;
+  .bg-white { background-color: #fff }
 
-  :hover {
-    background: rgba(0,0,0,0.5);
-    backdrop-filter: blur(5px);
+  .column { flex-direction: column }
 
-    a, label, div, form {
-     visibility: visible;
-   }
-  }
+  .row { flex-direction: row }
 
-  form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  a, label, div {
-    visibility: hidden;
+  .half-screen {
     display: flex;
     align-items: center;
     justify-content: center;
-    text-decoration: none;
-    height: 40px;
-    padding: 0 15px;
-    gap: 5px;
-    cursor: pointer;
-    margin: 0 auto;
+    max-width: 50%;
+    min-width: 600px;
   }
 
-  input[type=text] {
-    padding: 0 5px;
+  h1,
+  i {
+    max-width: 80%;
+    padding: 30px;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
   }
 
-  .control-close-btn {
-    color: #fff;
-    font-size: 30px;
+  h1 {
+    font-weight: 400;
+    width: 100%;
   }
 
-  .media-control-button {
-    display: flex;
-    background: #fff;
-    padding: 10px 20px;
-    border: 0;
-    border-radius: 5px;
-    cursor: pointer;
-    color: #000;
-    gap: 5px;
-    font-size: 16px;
-
-    label {
-      flex: 0 0 auto;
-    }
+  i {
+    font-size: large;
+    line-height: 30px;
   }
+  p {
+    font-size: large;
+    padding: 30px;
+  }
+
+  hr {
+    width: 200px;
+}
 `
