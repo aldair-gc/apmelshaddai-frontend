@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import { store } from '../app/store';
 
 const inst = axios.create({
-  baseURL: "https://apmelshaddai-server.aldairgc.com",
+  baseURL: "https://apmes-server.aldairgc.com",
 });
 
 inst.interceptors.request.use(
