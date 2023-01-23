@@ -6,6 +6,8 @@ export default createGlobalStyle`
     padding: 0;
     box-sizing: border-box;
     font-family: 'Open Sans', sans-serif;
+    --color-primary: #027db6;
+    --color-secondary: #a3d0e5;
   }
 
   #root {
@@ -233,7 +235,7 @@ export default createGlobalStyle`
   }
 
   /* RESPONSIVENESS - END */
-`
+`;
 
 export const ButtonBar = styled.div`
   display: flex;
@@ -244,7 +246,7 @@ export const ButtonBar = styled.div`
   max-width: 1000px;
   width: 100%;
   padding: 20px;
-`
+`;
 
 export const Filters = styled.div`
   display: flex;
@@ -267,7 +269,7 @@ export const Filters = styled.div`
     padding: 0 5px;
     text-shadow: 0 0 2px #000;
   }
-`
+`;
 
 export const Container = styled.div`
   display: flex;
@@ -278,7 +280,7 @@ export const Container = styled.div`
   max-width: 1200px;
   width: calc(100% - 40px);
   min-height: 80vh;
-`
+`;
 export const ButtonMid = styled.button`
   display: flex;
   align-items: center;
@@ -289,7 +291,7 @@ export const ButtonMid = styled.button`
   cursor: pointer;
   color: #000;
   gap: 5px;
-`
+`;
 
 export const SmallBox = styled.div`
   width: 500px;
@@ -315,7 +317,8 @@ export const SmallBox = styled.div`
     margin-top: 10px;
   }
 
-  input[type=submit], button {
+  input[type="submit"],
+  button {
     text-align: center;
     margin: 30px auto 10px auto;
     background: #027db6;
@@ -335,26 +338,29 @@ export const SmallBox = styled.div`
 `;
 
 export const LoadingContainer = styled.div`
-position: absolute;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background: rgba(0,0,0,0.5);
-display: flex;
-align-items: center;
-justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-i {
-  font-size: 30px;
-  color: #fff;
-  animation: 1s infinite normal spin;
-  animation-timing-function: linear;
-}
+  i {
+    font-size: 30px;
+    color: #fff;
+    animation: 1s infinite normal spin;
+    animation-timing-function: linear;
+  }
 
-@keyframes spin {
-  from {rotate: 0deg;}
-  to {rotate: 360deg;}
-}
-
+  @keyframes spin {
+    from {
+      rotate: 0deg;
+    }
+    to {
+      rotate: 360deg;
+    }
+  }
 `;
