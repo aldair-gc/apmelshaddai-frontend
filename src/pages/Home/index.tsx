@@ -7,7 +7,7 @@ import Carousel from "../../components/Carousel";
 
 export const Home = () => {
   useLayoutEffect(() => {
-    window.scrollTo(0, 2000);
+    window.scrollTo(0, 0);
   });
 
   return (
