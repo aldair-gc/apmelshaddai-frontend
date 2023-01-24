@@ -28,7 +28,7 @@ export default class Block extends Component<Props> {
       >
         <Link to={this.props.link}>
           <h1>{this.props.title}</h1>
-          <text>{this.props.text}</text>
+          <p>{this.props.text}</p>
         </Link>
       </Container>
     );

@@ -8,8 +8,9 @@ export const Container = styled.ul`
   align-items: center;
   margin-top: 20px;
   height: 800px;
-  width: 100%;
-  max-width: 1200px;
+  max-height: 100vw;
+  width: 1200px;
+  max-width: 100vw;
   overflow: hidden;
   list-style: none;
 `;

@@ -42,7 +42,7 @@ export const Container = styled.div.attrs(
     color: ${(props) => props.color1};
     border-radius: 50px;
   }
-  text {
+  p {
     font-family: sans-serif;
     font-size: 30px;
     text-align: ${(props) => props.alignX};
