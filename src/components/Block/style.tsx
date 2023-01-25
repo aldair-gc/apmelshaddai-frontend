@@ -13,7 +13,7 @@ export const Container = styled.div.attrs(
   background: url(${(props) => props.image});
   background-size: cover;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  border-radius: 25px;
+  border-radius: 15px;
 
   a {
     display: flex;
