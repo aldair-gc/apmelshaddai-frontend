@@ -4,6 +4,9 @@ import logo from "../../assets/images/logo-png-web.png";
 import { useLayoutEffect } from "react";
 import Block from "../../components/Block";
 import Carousel from "../../components/Carousel";
+import img01 from "../../assets/images/prayer-1308663_640.jpg";
+import img02 from "../../assets/images/different-nationalities-1280.jpg";
+import img03 from "../../assets/images/planner.jpeg";
 
 export const Home = () => {
   useLayoutEffect(() => {
@@ -68,7 +71,7 @@ export const Home = () => {
         title="Prayers"
         alignX="start"
         alignY="top"
-        image="../../assets/images/prayer-1308663_640.jpg"
+        image={img01}
         link="/prayer"
         text="Would you like us to pray for you? Send your request."
         color1="var(--color-primary)"
@@ -79,7 +82,7 @@ export const Home = () => {
         title="Missions"
         alignX="start"
         alignY="end"
-        image="../../assets/images/different-nationalities-1280.jpg"
+        image={img02}
         link="/missions"
         text="Updates on all our missions"
         color1="var(--color-secondary)"
@@ -90,7 +93,7 @@ export const Home = () => {
         title="Agenda"
         alignX="start"
         alignY="center"
-        image="../../assets/images/planner.jpeg"
+        image={img03}
         link="/agenda"
         text="Check our worships, meetings, lives..."
         color1="var(--color-primary)"

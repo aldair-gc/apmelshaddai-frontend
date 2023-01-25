@@ -9,9 +9,8 @@ interface Props {
 
 export default class CarouselItem extends Component<Props> {
   render() {
-    const imageUrl = new URL(this.props.image, import.meta.url).href;
     return (
-      <ItemContainer style={{ backgroundImage: `url("${imageUrl}")`, opacity: this.props.show }}>
+      <ItemContainer style={{ backgroundImage: `url("${this.props.image}")`, opacity: this.props.show }}>
         <h2>{this.props.text}</h2>
       </ItemContainer>
     );

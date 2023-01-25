@@ -2,17 +2,23 @@ import { useEffect, useState } from "react";
 import CarouselItem from "./Item";
 import { Container, ControlsContainer } from "./style";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import img01 from "../../assets/images/family/family03.jpeg";
+import img02 from "../../assets/images/family/family05.jpeg";
+import img03 from "../../assets/images/family/neide02.jpeg";
+import img04 from "../../assets/images/church-jpg-web-wide.jpeg";
+import img05 from "../../assets/images/church_inside-jpg-web-wide.jpg";
+import img06 from "../../assets/images/2021-12-27.jpeg";
 
 export default function Carousel() {
   const [show, setShow] = useState(0);
   const [timer, setTimer] = useState(3000);
   const imageUrlList = [
-    { url: "../../assets/images/family/family03.jpeg", text: "" },
-    { url: "../../assets/images/family/family05.jpeg", text: "" },
-    { url: "../../assets/images/family/neide02.jpeg", text: "" },
-    { url: "../../assets/images/church-jpg-web-wide.jpeg", text: "" },
-    { url: "../../assets/images/church_inside-jpg-web-wide.jpg", text: "" },
-    { url: "../../assets/images/2021-12-27.jpeg", text: "" },
+    { url: img01, text: "" },
+    { url: img02, text: "" },
+    { url: img03, text: "" },
+    { url: img04, text: "" },
+    { url: img05, text: "" },
+    { url: img06, text: "" },
   ];
   useEffect(() => {
     const intervalId = setInterval(() => {
