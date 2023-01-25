@@ -4,7 +4,7 @@ export const Container = styled.div.attrs(
   (props: { image: string; color1: string; color2: string; alignX: string; alignY: string; background: string }) => props
 )`
   position: relative;
-  width: 100%;
+  width: calc(100% - 40px);
   height: 500px;
   max-width: 1200px;
   max-height: 60vh;
