@@ -1,22 +1,22 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route } from "react-router-dom";
 
-import Private from './private';
+import Private from "./private";
 
-import { Home } from '../pages/Home'
-import { Contact } from '../pages/Contact'
-import { NotFound } from '../components/NotFound'
-import Feed from '../pages/Feed'
-import { Management } from '../pages/Management'
-import { Register } from '../pages/Register'
-import { Login } from '../pages/Login'
-import { Prayer } from '../pages/Prayer'
-import { Groups } from '../pages/Groups'
-import NewPost from '../pages/NewPost'
-import { Messages } from '../pages/Messages'
-import EditPost from '../pages/EditPost';
-import Test from '../pages/Test';
-import Missions from '../pages/Missions';
-
+import { Home } from "../pages/Home";
+import { Contact } from "../pages/Contact";
+import { NotFound } from "../components/NotFound";
+import Feed from "../pages/Feed";
+import { Management } from "../pages/Management";
+import { Register } from "../pages/Register";
+import { Login } from "../pages/Login";
+import { Prayer } from "../pages/Prayer";
+import { Groups } from "../pages/Groups";
+import NewPost from "../pages/NewPost";
+import { Messages } from "../pages/Messages";
+import EditPost from "../pages/EditPost";
+import Test from "../pages/Test";
+import Missions from "../pages/Missions";
+import { Agenda } from "../pages/Agenda";
 
 export default function Routers() {
   return (
@@ -27,7 +27,8 @@ export default function Routers() {
       <Route path="/prayer" element={<Prayer />}></Route>
       <Route path="/register" element={<Register />}></Route>
       <Route path="/login" element={<Login />}></Route>
-      <Route path='/missions' element={<Missions />}></Route>
+      <Route path="/missions" element={<Missions />}></Route>
+      <Route path="/agenda" element={<Agenda />}></Route>
       <Route path="/" element={<Private />}>
         <Route path="management" element={<Management />}></Route>
         <Route path="newpost" element={<NewPost />}></Route>
